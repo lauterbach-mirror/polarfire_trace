@@ -1,0 +1,149 @@
+ChDir /cygdrive/i/EVB/RISC-V/Microchip/PolarFire_IcicleKit
+
+DO startup.cmm
+
+; Point SMB into FPGA FIC_1 area; at the moment, 4 GiB are mapped
+; to the trace sink, but that's probably not needed.
+SYStem.CONFIG.USOCSMB.BufferBase D:0x3F00000000
+
+TargetSystem.NewInstance c /ARCHitecture ARM
+
+InterCom.execute c SYStem.CPU ZYNQ-ULTRASCALE+-APU
+InterCom.execute c SYStem.CONFIG.DTM Type Generic
+InterCom.execute c TPIU.PortSize 16.
+InterCom.execute c TPIU.PortMode Continuous
+InterCom.execute c Analyzer.TERMination ON
+InterCom.execute c Analyzer.THreshold  1.66
+InterCom.execute c Analyzer.SAMPLE TP0 -0.468
+InterCom.execute c Analyzer.SAMPLE TP1 -1.092
+InterCom.execute c Analyzer.SAMPLE TP2 -0.858
+InterCom.execute c Analyzer.SAMPLE TP3 +0.312
+InterCom.execute c Analyzer.SAMPLE TP4 -0.936
+InterCom.execute c Analyzer.SAMPLE TP5 -0.780
+InterCom.execute c Analyzer.SAMPLE TP6 -0.858
+InterCom.execute c Analyzer.SAMPLE TP7 +0.702
+InterCom.execute c Analyzer.SAMPLE TP8 +1.326
+InterCom.execute c Analyzer.SAMPLE TP9 +1.170
+InterCom.execute c Analyzer.SAMPLE TP10 +1.482
+InterCom.execute c Analyzer.SAMPLE TP11 +0.858
+InterCom.execute c Analyzer.SAMPLE TP12 +0.702
+InterCom.execute c Analyzer.SAMPLE TP13 +0.936
+InterCom.execute c Analyzer.SAMPLE TP14 +0.936
+InterCom.execute c Analyzer.SAMPLE TP15 +1.014
+
+InterCom.execute c Analyzer.state
+InterCom.execute c Analyzer.Arm
+Go.direct
+SCREEN.WAIT 5.s
+Break.direct
+InterCom.execute c Analyzer.OFF
+InterCom.execute c Analyzer.SAVE ~~~/rvtest.ad
+InterCom.execute c QUIT
+
+SYStem.Down
+
+Data.LOAD.Elf PolarFireSoC_Demos/sieve/sieve_ram_e51.elf /Quad /VM
+sYmbol.SourcePATH.SetBaseDir PolarFireSoC_Demos/sieve/SiFive_e51
+
+SYStem.CONFIG.USOCTC Index 0x19
+SYStem.CONFIG.USOCTC TraceSource USOCRTE 0
+UltraSOC.TC.TC1.IDMode SINGLEID
+UltraSOC.TC.TC1.TraceID 1.
+
+SYStem.CONFIG.TPIU Type Generic
+SYStem.CONFIG.TPIU ATBSource USOCTC
+TPIU.PortSize 16.
+TPIU.PortMode Continuous
+
+LA.IMPORT.TraceFile ~~~/rvtest.ad
+LA.List TP TPCSID TPC TPINFO
+LA.List
+
+ENDDO
+
+DO startup.cmm
+
+; Attach to some other core in second GUI to get run-time access to SMB
+TargetSystem.NewInstance b
+InterCom.execute b SYStem.CPU MPFS250T-FCVG484-U54
+InterCom.execute b SYStem.CONFIG.CORE 2. 1.
+InterCom.execute b CORE.ASSIGN 1
+InterCom.execute b SYStem.Attach
+InterCom.execute b Break.direct
+InterCom.execute b PER.view perusocsmb.per /SpotLight
+
+; Point SMB into FPGA FIC_1 area; at the moment, 4 GiB are mapped
+; to the trace sink, but that's probably not needed.
+SYStem.CONFIG.USOCSMB.BufferBase D:0x3F00000000
+
+; Needed for some reason after attaching second GUI…
+Onchip.Init
+
+Go.direct
+
+; Modify read pointer to be far outside buffer, causes endless trace!
+InterCom.execute b Data.Set MD:0x2301005C %Long 0xF0000000
+
+ENDDO
+
+DO startup.cmm
+
+; Point SMB into FPGA FIC_1 area; at the moment, 4 GiB are mapped
+; to the trace sink, but that's probably not needed.
+SYStem.CONFIG.USOCSMB.BufferBase D:0x3F00000000
+
+TargetSystem.NewInstance c /ARCHitecture ARM
+
+InterCom.execute c SYStem.CPU ZYNQ-ULTRASCALE+-APU
+InterCom.execute c SYStem.CONFIG.DTM Type Generic
+InterCom.execute c DTM.TraceID 1.
+InterCom.execute c TPIU.PortSize 16.
+InterCom.execute c TPIU.PortMode Continuous
+InterCom.execute c Analyzer.TERMination ON
+InterCom.execute c Analyzer.THreshold  1.66
+InterCom.execute c Analyzer.SAMPLE TP0 -0.468
+InterCom.execute c Analyzer.SAMPLE TP1 -1.092
+InterCom.execute c Analyzer.SAMPLE TP2 -0.858
+InterCom.execute c Analyzer.SAMPLE TP3 +0.312
+InterCom.execute c Analyzer.SAMPLE TP4 -0.936
+InterCom.execute c Analyzer.SAMPLE TP5 -0.780
+InterCom.execute c Analyzer.SAMPLE TP6 -0.858
+InterCom.execute c Analyzer.SAMPLE TP7 +0.702
+InterCom.execute c Analyzer.SAMPLE TP8 +1.326
+InterCom.execute c Analyzer.SAMPLE TP9 +1.170
+InterCom.execute c Analyzer.SAMPLE TP10 +1.482
+InterCom.execute c Analyzer.SAMPLE TP11 +0.858
+InterCom.execute c Analyzer.SAMPLE TP12 +0.702
+InterCom.execute c Analyzer.SAMPLE TP13 +0.936
+InterCom.execute c Analyzer.SAMPLE TP14 +0.936
+InterCom.execute c Analyzer.SAMPLE TP15 +1.014
+
+InterCom.execute c DTMAnalyzer.List TP TPCSID TPC
+InterCom.execute c DTMAnalyzer.state
+
+ENDDO
+
+SYStem.CPU MPFS250T-FCVG484-E51
+
+SYStem.CONFIG USOCCOM.Type AXI
+SYStem.CONFIG USOCCOM.Base D:0x23000000
+
+SYStem.CONFIG USOCRTE.Index 0x17
+
+SYStem.CONFIG.USOCTC Index 0x19
+SYStem.CONFIG.USOCTC TraceSource USOCRTE 0
+UltraSOC.TC.TC1.IDMode SINGLEID
+UltraSOC.TC.TC1.TraceID 1.
+
+SYStem.CONFIG.TPIU Type Generic
+SYStem.CONFIG.TPIU ATBSource USOCTC
+TPIU.PortSize 16.
+TPIU.PortMode Continuous
+
+SYStem.Mode Up
+Data.LOAD.Elf /cygdrive/i/EVB/RISC-V/Microchip/PolarFire_IcicleKit/PolarFireSoC_Demos/sieve/sieve_ram_e51.elf /Quad /PlusVM
+
+LA.IMPORT.TraceFile /tmp/rvtest.ad
+LA.List TP TPCSID TPC TPINFO
+
+ENDDO
