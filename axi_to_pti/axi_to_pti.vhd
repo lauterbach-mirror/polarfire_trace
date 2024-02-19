@@ -39,7 +39,7 @@ architecture behavioral of axi_to_pti is
 	signal wPackedData:         std_logic_vector(63 downto 0);
 	signal wPackedReady:        std_logic;
 
-	signal wReadData:           std_logic_vector(15 downto 0);
+	signal wReadData:           std_logic_vector(31 downto 0);
 
 begin
 	-- Convert AXI memory-mapped write channel to stream with individual data
@@ -133,7 +133,7 @@ begin
 
 	sReader: entity work.tpiu_output_fifo_reader generic map (
 		gInBits         => 64,
-		gOutBits        => 16
+		gOutBits        => 32
 	) port map (
 		iClk            => iClk,
 		iRst            => iRst,
@@ -144,7 +144,7 @@ begin
 		oData           => wReadData
 	);
 
-	sDdr: entity work.tpiu_ddr_halfspeed generic map (
+	sDdr: entity work.tpiu_ddr_pfio generic map (
 		gOutBits        => 16
 	) port map (
 		iClk            => iClk,

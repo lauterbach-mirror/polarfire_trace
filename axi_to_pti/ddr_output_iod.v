@@ -1,0 +1,120 @@
+module ddr_output_iod (
+	iClk,
+	iData,
+	oTx
+);
+
+input       iClk;
+input [1:0] iData;
+output      oTx;
+
+wire [7:0]  wNcRx;
+wire [10:0] wNcClkSel;
+
+wire wGnd;
+wire wVcc;
+
+assign wGnd = 1'b0;
+assign wVcc = 1'b1;
+
+IOD #( .DATA_RATE(800.000000),
+	.FORMAL_NAME("PF_IO"),
+	.INTERFACE_NAME("NA"),
+	.DELAY_LINE_SIMULATION_MODE("ENABLED"),
+	.MSC_UNIQUE(""),
+	.INTERFACE_LEVEL(3'b000),
+	.RESERVED_0(1'b0),
+	.RX_CLK_EN(1'b0),
+	.RX_CLK_INV(1'b0),
+	.TX_CLK_EN(1'b1),
+	.TX_CLK_INV(1'b0),
+	.HS_IO_CLK_SEL(3'b000),
+	.QDR_EN(1'b0),
+	.EDGE_DETECT_EN(1'b0),
+	.DELAY_LINE_MODE(2'b00),
+	.RX_MODE(4'b0000),
+	.EYE_MONITOR_MODE(1'b0),
+	.DYN_DELAY_LINE_EN(1'h0),
+	.FIFO_WR_EN(1'b0),
+	.EYE_MONITOR_EN(1'b0),
+	.TX_MODE(7'b1000001),
+	.TX_CLK_SEL(2'b00),
+	.TX_OE_MODE(3'b000),
+	.TX_OE_CLK_INV(1'b0),
+	.RX_DELAY_VAL(7'b0000000),
+	.RX_DELAY_VAL_X2(1'b0),
+	.TX_DELAY_VAL(7'b0000000),
+	.EYE_MONITOR_WIDTH(3'b001),
+	.EYE_MONITOR_WIDTH_SRC(1'b0),
+	.RESERVED_1(1'b0),
+	.DISABLE_LANECTRL_RESET(1'b1),
+	.INPUT_DELAY_SEL(2'b00),
+	.OEFF_EN_INV(1'b0),
+	.INFF_EN_INV(1'b0),
+	.OUTFF_EN_INV(1'b0)
+) sIod  (
+	.EYE_MONITOR_EARLY(),
+	.EYE_MONITOR_LATE(),
+	.RX_DATA(wNcRx),
+	.DELAY_LINE_OUT_OF_RANGE(),
+	.TX_DATA({wGnd, wGnd, wGnd, wGnd, wGnd, wGnd, iData[1], iData[0]}),
+	.OE_DATA({wVcc, wVcc, wVcc, wVcc}),
+	.RX_BIT_SLIP(wGnd),
+	.EYE_MONITOR_CLEAR_FLAGS(wGnd),
+	.DELAY_LINE_MOVE(wGnd),
+	.DELAY_LINE_DIRECTION(wGnd),
+	.DELAY_LINE_LOAD(wVcc),
+	.RX_CLK(wGnd),
+	.TX_CLK(iClk),
+	.ODT_EN(wVcc),
+	.INFF_SL(wGnd),
+	.INFF_EN(wGnd),
+	.OUTFF_SL(wGnd),
+	.OUTFF_EN(wGnd),
+	.AL_N(wGnd),
+	.OEFF_LAT_N(wVcc),
+	.OEFF_SD_N(wVcc),
+	.OEFF_AD_N(wVcc),
+	.INFF_LAT_N(wVcc),
+	.INFF_SD_N(wVcc),
+	.INFF_AD_N(wVcc),
+	.OUTFF_LAT_N(wVcc),
+	.OUTFF_SD_N(wVcc),
+	.OUTFF_AD_N(wVcc),
+	.RX_P(wGnd),
+	.RX_N(wGnd),
+	.TX_DATA_9(wGnd),
+	.TX_DATA_8(wGnd),
+	.ARST_N(wVcc),
+	.RX_SYNC_RST(wVcc),
+	.TX_SYNC_RST(wVcc),
+	.HS_IO_CLK({wGnd, wGnd, wGnd, wGnd, wGnd, wGnd}),
+	.RX_DQS_90({wGnd, wGnd}),
+	.TX_DQS(wGnd),
+	.TX_DQS_270(wGnd),
+	.FIFO_WR_PTR({wGnd, wGnd, wGnd}),
+	.FIFO_RD_PTR({wGnd, wGnd, wGnd}),
+	.TX(oTx),
+	.OE(),
+	.CDR_CLK(wGnd),
+	.CDR_NEXT_CLK(wGnd),
+	.EYE_MONITOR_LANE_WIDTH({wGnd, wGnd, wGnd}),
+	.DDR_DO_READ(),
+	.CDR_CLK_A_SEL_8(),
+	.CDR_CLK_A_SEL_9(),
+	.CDR_CLK_A_SEL_10(),
+	.CDR_CLK_B_SEL(wNcClkSel),
+	.SWITCH(),
+	.CDR_CLR_NEXT_CLK_N(),
+	.TX_DATA_OUT_9(),
+	.TX_DATA_OUT_8(),
+	.AL_N_OUT(),
+	.OUTFF_SL_OUT(),
+	.OUTFF_EN_OUT(),
+	.INFF_SL_OUT(),
+	.INFF_EN_OUT(),
+	.RX_CLK_OUT(),
+	.TX_CLK_OUT()
+);
+
+endmodule
