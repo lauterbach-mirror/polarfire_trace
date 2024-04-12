@@ -12,25 +12,25 @@ InterCom.execute c SYStem.CPU ZYNQ-ULTRASCALE+-APU
 InterCom.execute c SYStem.CONFIG.DTM Type Generic
 InterCom.execute c TPIU.PortSize 16.
 InterCom.execute c TPIU.PortMode Continuous
+InterCom.execute c Analyzer.Init
 InterCom.execute c Analyzer.TERMination ON
-InterCom.execute c Analyzer.THreshold  1.10
+InterCom.execute c Analyzer.THreshold  1.66
 InterCom.execute c Analyzer.SAMPLE TP0 +3.432
-InterCom.execute c Analyzer.SAMPLE TP1 +2.730
-InterCom.execute c Analyzer.SAMPLE TP2 +2.808
-InterCom.execute c Analyzer.SAMPLE TP3 +2.730
-InterCom.execute c Analyzer.SAMPLE TP4 +2.808
-InterCom.execute c Analyzer.SAMPLE TP5 +2.964
+InterCom.execute c Analyzer.SAMPLE TP1 +2.808
+InterCom.execute c Analyzer.SAMPLE TP2 +2.964
+InterCom.execute c Analyzer.SAMPLE TP3 +2.808
+InterCom.execute c Analyzer.SAMPLE TP4 +2.964
+InterCom.execute c Analyzer.SAMPLE TP5 +2.886
 InterCom.execute c Analyzer.SAMPLE TP6 +2.886
-InterCom.execute c Analyzer.SAMPLE TP7 +3.276
-InterCom.execute c Analyzer.SAMPLE TP8 +3.120
-InterCom.execute c Analyzer.SAMPLE TP9 +3.588
-InterCom.execute c Analyzer.SAMPLE TP10 +3.510
-InterCom.execute c Analyzer.SAMPLE TP11 +3.120
-InterCom.execute c Analyzer.SAMPLE TP12 +3.120
-InterCom.execute c Analyzer.SAMPLE TP13 +3.120
-InterCom.execute c Analyzer.SAMPLE TP14 +3.120
-InterCom.execute c Analyzer.SAMPLE TP15 +3.120
-
+InterCom.execute c Analyzer.SAMPLE TP7 +3.666
+InterCom.execute c Analyzer.SAMPLE TP8 +3.354
+InterCom.execute c Analyzer.SAMPLE TP9 +3.354
+InterCom.execute c Analyzer.SAMPLE TP10 +3.354
+InterCom.execute c Analyzer.SAMPLE TP11 +3.354
+InterCom.execute c Analyzer.SAMPLE TP12 +3.354
+InterCom.execute c Analyzer.SAMPLE TP13 +3.354
+InterCom.execute c Analyzer.SAMPLE TP14 +3.354
+InterCom.execute c Analyzer.SAMPLE TP15 +3.354
 
 InterCom.execute c Analyzer.state
 InterCom.execute c Analyzer.Arm
@@ -148,3 +148,20 @@ LA.IMPORT.TraceFile /tmp/rvtest.ad
 LA.List TP TPCSID TPC TPINFO
 
 ENDDO
+
+ChDir /cygdrive/i/EVB/RISC-V/Microchip/PolarFire_IcicleKit
+
+DO startup.cmm
+
+; Point SMB into FPGA FIC_1 area; at the moment, 4 GiB are mapped
+; to the trace sink, but that's probably not needed.
+SYStem.CONFIG.USOCSMB.BufferBase D:0x3F00000000
+
+SYStem.CONFIG.TPIU Type Generic
+SYStem.CONFIG.TPIU ATBSource USOCSMB
+TPIU.PortSize 16.
+TPIU.PortMode Continuous
+
+Onchip.DISable
+Trace.METHOD Analyzer
+Analyzer.Init
