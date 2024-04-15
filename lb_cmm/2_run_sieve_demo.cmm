@@ -1,0 +1,36 @@
+LOCAL &args
+ENTRY %LINE &args
+
+LOCAL &cpu
+&cpu=STRing.SCANAndExtract("&args","CPU=","MPFS250T-FCVG484-E51")
+
+IF "&cpu"!=""
+(
+  RESet
+  SYStem.CPU &cpu
+)
+IF CPU()=="NONE"
+(
+  ECHO %ERROR "No CPU selected! Abort..."
+  ENDDO
+)
+
+SYStem.CONFIG USOCSMB.BufferBase D:0x3F00000000
+
+SYStem.CONFIG.TPIU Type Generic
+SYStem.CONFIG.TPIU ATBSource USOCSMB
+TPIU.PortSize 16.
+TPIU.PortMode Continuous
+
+SYStem.Mode Up
+Trace.METHOD NONE
+; initialize DDR
+Go.direct
+WAIT 2.s
+Break.direct
+
+Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
+
+Trace.METHOD Analyzer
+Analyzer.Init
+Analyzer.state

@@ -1,0 +1,10 @@
+PARAMETERS &gzfile
+PRIVATE &jbcfile
+
+MKTEMP &jbcfile "*.jbc"
+UNZIP "&gzfile" "&jbcfile"
+
+SYStem.JtagClock 30MHz
+JTAG.PROGRAM.JAM "&jbcfile" /Action "PROGRAM" /Define "DO_VERIFY=0"
+
+RM "&jbcfile"
