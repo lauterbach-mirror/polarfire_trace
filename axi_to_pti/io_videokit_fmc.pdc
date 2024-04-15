@@ -1,0 +1,39 @@
+######### SoC Video kit FMC connector ###########
+
+set_io -port_name oTraceClk        -pin_name A30 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[0\]  -pin_name B24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[1\]  -pin_name F25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[2\]  -pin_name A28 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[3\]  -pin_name B28 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[4\]  -pin_name A25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[5\]  -pin_name B25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[6\]  -pin_name A29 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[7\]  -pin_name B29 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[8\]  -pin_name D26 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[9\]  -pin_name C27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[10\] -pin_name A27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[11\] -pin_name B27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[12\] -pin_name F24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[13\] -pin_name G24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[14\] -pin_name E23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[15\] -pin_name D23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+
+# Sig Mictor FMCP  FMCN           Ball
+# CLK  6     G6    HPC_LA00_CC_P  A30
+# D0  38     C14   HPC_LA10_P     B24
+# D1  28     C19   HPC_LA03_N     F25
+# D2  26     H10   HPC_LA04_P     A28
+# D3  24     H11   HPC_LA04_N     B28
+# D4  22     D14   HPC_LA09_P     A25
+# D5  20     D15   HPC_LA09_N     B25
+# D6  18     D8    HPC_LA01_CC_P  A29
+# D7  16     D9    HPC_LA01_CC_N  B29
+# D8  37     D11   HPC_LA05_P     D26
+# D9  35     D12   HPC_LA05_N     C27
+# D10 33     C10   HPC_LA06_P     A27
+# D11 31     C11   HPC_LA06_N     B27
+# D12 29     H13   HPC_LA07_P     F24
+# D13 27     H14   HPC_LA07_N     G24
+# D14 25     G12   HPC_LA08_P     E23
+# D15 23     G13   HPC_LA08_N     D23
+#     12     -     VCCIO_HPC_VADJ
