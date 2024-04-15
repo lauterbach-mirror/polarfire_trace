@@ -1,0 +1,3 @@
+set_iobank -bank_name Bank1 -vcci 3.30 -fixed true -update_iostd true
+set_iobank -bank_name Bank0 -vcci 1.80 -fixed true -update_iostd true
+set_io -port_name REF_CLK_50MHz -pin_name W12 -fixed true -DIRECTION INPUT
