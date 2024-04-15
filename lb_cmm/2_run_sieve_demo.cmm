@@ -34,3 +34,17 @@ Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
 Trace.METHOD Analyzer
 Analyzer.Init
 Analyzer.state
+
+; run poor man's AutoFocus; We don't have a pattern generator, but TRACE32
+; doesn't know that and will try anyways if we're not in running + armed state.
+Go.direct
+Analyzer.THreshold 1.65
+(
+	ON ERROR continue
+	Analyzer.AutoFocus /NoTHreshold
+	PRINT "If the above printed errors, that's probably OK..."
+)
+Break.direct
+Analyzer.Init
+
+Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
