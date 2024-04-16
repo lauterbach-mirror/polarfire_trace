@@ -1,3 +1,5 @@
+# Trace support for PolarFire SoC (RISC-5 + FPGA)
+
 This repository contains resources to implement off-chip trace of the hard RISC-V cores of a PolarFile SoC with Lauterbach tools.
 
 Currently, only 16-bit parallel trace using a PowerTrace 2/3 with an AutoFocus-II preprocessor is implemented.
@@ -11,7 +13,7 @@ However, in this application, the Data is written to a small 4-KiB address range
 Currently, the converter IP uses a single clock source both for the AXI interface as well as for trace output and is hardcoded to use 16 data bits.
 This can be changed, see the comments in `axi_to_pti/axi_to_pti.vhd`.
 
-# Supported evaluation boards
+## Supported evaluation boards
 
 We support the following adaptions and evaluation boards:
 
@@ -29,7 +31,7 @@ We support the following adaptions and evaluation boards:
 
 Of course, trace is also possible with other boards, but for these, the user will need to create their own FPGA design.
 
-# Running the demos
+## Running the demos
 
 Lauterbach hardware/software requirements:
 
@@ -45,7 +47,7 @@ Instructions:
    This takes a few minutes, but only needs to be done once.
 2. Use the script `lb_cmm/2_run_sieve_demo.cmm` to debug and trace a simple sieve demo.
 
-# Generating the example bitstreams with Libero
+## Generating the example bitstreams with Libero
 
 The following instructions will generate a minimal FPGA project with just the HSS (hard software services), trace and SDRAM connection.
 The scripts require exactly Libero 2023.2.
@@ -66,7 +68,7 @@ The scripts require exactly Libero 2023.2.
    Click OK.
    This generates a bitstream (.stp file) suitable for programming with TRACE32.
 
-# Integrating the `axi_to_pti` IP into an existing FPGA design
+## Integrating the `axi_to_pti` IP into an existing FPGA design
 
 The following instructions describe how to add off-chip trace to an existing design.
 Use these instructions if you want to use something other than the supported evaluation boards or if your application uses other IP inside the FPGA.
