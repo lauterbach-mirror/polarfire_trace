@@ -1,7 +1,6 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
-use work.util_pkg.minbits;
 
 package tpiu_packer_pkg is
 	function fInLanes(cInBits: positive) return positive;

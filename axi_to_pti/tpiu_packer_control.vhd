@@ -2,7 +2,6 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.util_pkg.minbits;
-use work.util_pkg.is_defined;
 use work.tpiu_packer_pkg.fInLanes;
 use work.tpiu_packer_pkg.fMidLanes;
 
