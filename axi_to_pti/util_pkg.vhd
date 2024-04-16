@@ -5,12 +5,6 @@ use IEEE.numeric_std.all;
 package util_pkg is
 	-- returns the minimum number of bits required to hold a value ranging from 0 to num - 1
 	function minbits(num: positive) return natural;
-	function min(vA, vB: integer) return integer;
-	function max(vA, vB: integer) return integer;
-
-	-- conversion functions between unsigned binary and gray code
-	function bin2gray(bin: unsigned) return std_logic_vector;
-	function gray2bin(gray: std_logic_vector) return unsigned;
 
 	-- check whether all bits are '0' or '1'; used to properly propagate undefined values across decisions and arithmetic, avoiding warnings and simulation mismatches
 	function is_defined(a: std_logic) return boolean;
@@ -32,47 +26,6 @@ package body util_pkg is
 			end if;
 		end loop;
 		return 32;
-	end function;
-
-	function min(vA, vB: integer) return integer is
-	begin
-		if vA < vB then
-			return vA;
-		else
-			return vB;
-		end if;
-	end function;
-
-	function max(vA, vB: integer) return integer is
-	begin
-		if vA < vB then
-			return vB;
-		else
-			return vA;
-		end if;
-	end function;
-
-	function bin2gray(bin: unsigned) return std_logic_vector is
-	begin
-		return std_logic_vector(bin xor (bin srl 1));
-	end function;
-
-	-- see http://aggregate.org/MAGIC/#Gray%20Code%20Conversion
-	function gray2bin(gray: std_logic_vector) return unsigned is
-		variable bin: unsigned(gray'length - 1 downto 0);
-		variable i: positive;
-
-	begin
-		bin := unsigned(gray);
-		i := 1;
-
-		while i < bin'length loop
-			bin := bin xor (bin srl i);
-
-			i := i * 2;
-		end loop;
-
-		return bin;
 	end function;
 
 	function is_defined(a: std_logic) return boolean is
