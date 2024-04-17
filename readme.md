@@ -1,4 +1,4 @@
-# Trace support for PolarFire SoC (RISC-5 + FPGA)
+# Trace support for PolarFire SoC (RISC-V + FPGA)
 
 This repository contains resources to implement off-chip trace of the hard RISC-V cores of a PolarFile SoC with Lauterbach tools.
 
@@ -19,7 +19,7 @@ We support the following adaptions and evaluation boards:
 
 * PolarFire® SoC Video Kit via FMC connector using one of the following adapters:
 
-  * Lauterbach LA-LA-2785;
+  * Lauterbach LA-2785;
     This adapter would also allow testing 32-bit parallel trace or Aurora/HSSTP trace, but neither has been implemented yet.
   * Xilinx/AMD FMC XM105 card;
     This adapter only allows 16-bit parallel trace.
