@@ -23,12 +23,7 @@ TPIU.PortSize 16.
 TPIU.PortMode Continuous
 
 SYStem.Mode Up
-Trace.METHOD NONE
-; initialize DDR
-Go.direct
-WAIT 2.s
-Break.direct
-
+GOSUB configure_target_registers
 Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
 
 Trace.METHOD Analyzer
@@ -48,3 +43,25 @@ Break.direct
 Analyzer.Init
 
 Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
+
+ENDDO
+
+configure_target_registers:
+	PRIVATE &mask &amp
+	&amp="&"
+
+	; bring up FIC1 interface
+	; SYSREG.SUBBLK_CLOCK_CR: Set FIC1 bit
+	&mask=1.<<25.
+	Data.Set MD:0x20002084 %Long Data.Long(MD:0x20002084)|&mask
+	; SYSREG.SOFT_RESET_CR: Clear FIC1 and FPGA bits
+	&mask=1.<<25.|1.<<17.
+	Data.Set MD:0x20002088 %Long Data.Long(MD:0x20002088)&(amp)~&mask
+	PER.Set.simple MD:0x20002010 %Long 1.
+
+	; Prevent MPU errors from trace master
+	; MPUCFG.TRACE.PMPCFG_SCB: No idea, just copy what seems to work
+	Data.Set MD:0x20005900 %Quad 0x1F00000FFFFFFFFF
+	Data.Set MD:0x20005908 %Quad 0x1F00000FFFFFFFFF
+
+	RETURN
