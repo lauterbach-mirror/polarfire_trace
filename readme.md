@@ -45,7 +45,8 @@ Instructions:
 
 1. Use the scripts `lb_cmm/0_program_videokit.cmm` or `lb_cmm/1_program_icicle.cmm` to program the FPGA.
    This takes a few minutes, but only needs to be done once.
-2. Use the script `lb_cmm/2_run_sieve_demo.cmm` to debug and trace a simple sieve demo.
+2. If you use the icicle demo, set J46 to supply the trace reference voltage to the preprocessor.
+3. Use the script `lb_cmm/2_run_sieve_demo.cmm` to debug and trace a simple sieve demo.
 
 ## Generating the example bitstreams with Libero
 
