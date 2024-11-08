@@ -2,7 +2,7 @@ LOCAL &args
 ENTRY %LINE &args
 
 LOCAL &cpu
-&cpu=STRing.SCANAndExtract("&args","CPU=","MPFS250T-FCVG484-E51")
+&cpu=STRing.SCANAndExtract("&args","CPU=","MPFS250T-U54")
 
 IF "&cpu"!=""
 (
