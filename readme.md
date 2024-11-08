@@ -19,14 +19,14 @@ We support the following adaptions and evaluation boards:
 
 * PolarFire® SoC Video Kit via FMC connector using one of the following adapters:
 
-  * Lauterbach LA-2785;
+  * Lauterbach [LA-2785](https://www.lauterbach.com/products/LA-2785);
     This adapter would also allow testing 32-bit parallel trace or Aurora/HSSTP trace, but neither has been implemented yet.
-  * Xilinx/AMD FMC XM105 card;
+  * Xilinx/AMD [FMC XM105](https://www.xilinx.com/products/boards-and-kits/hw-fmc-xm105-g.html) card;
     This adapter only allows 16-bit parallel trace.
 
   For 16-bit parallel trace, these adapters are pin compatible, so the same FPGA design can support both cards.
   For the converter's pin map, refer to `script_support/videokit/io_videokit_fmc.pdc` in this repository.
-* PolarFire® SoC FPGA Icicle Kit via RPi connector using a Lauterbach adapter that will be available in Q3/2024;
+* PolarFire® SoC FPGA Icicle Kit via RPi connector using Lauterach [LA-3884](https://www.lauterbach.com/products/LA-3884);
   For the converter's pin map, refer to `script_support/icicle/io_icicle_rpi.pdc` in this repository.
 
 Of course, trace is also possible with other boards, but for these, the user will need to create their own FPGA design.
