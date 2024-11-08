@@ -39,7 +39,7 @@ Lauterbach hardware/software requirements:
 * PowerTrace 2/3 with AutoFocus-II preprocessor
 * IDC20A cable
 * Debug and trace licenses for RISC-V
-* At reast TRACE32 build 168513., i. e. a nightly from 2024-04-13 or later or R.2024.09 release
+* TRACE R.2024.09 or a later release
 
 Instructions:
 
