@@ -42,7 +42,17 @@ Analyzer.THreshold 1.65
 Break.direct
 Analyzer.Init
 
-Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
+IF CPU()=="MPFS250T-E51"
+(
+	Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
+)
+ELSE IF CPU()=="MPFS250T-U54"
+(
+	Data.LOAD.Elf ~~~~/sieve_ram_u54.elf /Quad /PlusVM /RelPATH
+	Register.Set PC background /CORE 1
+	Register.Set PC background /CORE 2
+	Register.Set PC background /CORE 3
+)
 
 ENDDO
 
