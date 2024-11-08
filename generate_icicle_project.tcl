@@ -1,7 +1,15 @@
+if {[llength $argv] >= 1} {
+	set bits_used [lindex $argv 0]
+} else {
+	set bits_used 16
+}
+
+set bits_phys           16
+
 set src_path            ./script_support
 set board_path          $src_path/icicle
 
-set project_name        trace_icicle
+set project_name        "trace_icicle_$bits_used"
 set project_die         MPFS250T_ES
 set project_package     FCVG484
 set project_speed       STD

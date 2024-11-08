@@ -17,11 +17,27 @@ set_io -port_name oTraceData\[12\] -pin_name F24 -fixed true -io_std LVCMOS33 -D
 set_io -port_name oTraceData\[13\] -pin_name G24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
 set_io -port_name oTraceData\[14\] -pin_name E23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
 set_io -port_name oTraceData\[15\] -pin_name D23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[16\] -pin_name E21 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[17\] -pin_name F23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[18\] -pin_name A22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[19\] -pin_name A23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[20\] -pin_name H18 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[21\] -pin_name J18 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[22\] -pin_name D24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[23\] -pin_name D25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[24\] -pin_name C22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[25\] -pin_name B22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[26\] -pin_name G25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[27\] -pin_name G26 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[28\] -pin_name J27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[29\] -pin_name H27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[30\] -pin_name F22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceData\[31\] -pin_name E22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
 
 # Sig Mictor FMCP  FMCN           Ball
 # CLK  6     G6    HPC_LA00_CC_P  A30
 # D0  38     C14   HPC_LA10_P     B24
-# D1  28     C19   HPC_LA03_N     F25
+# D1  28     G10   HPC_LA03_N     F25
 # D2  26     H10   HPC_LA04_P     A28
 # D3  24     H11   HPC_LA04_N     B28
 # D4  22     D14   HPC_LA09_P     A25
@@ -37,3 +53,20 @@ set_io -port_name oTraceData\[15\] -pin_name D23 -fixed true -io_std LVCMOS33 -D
 # D14 25     G12   HPC_LA08_P     E23
 # D15 23     G13   HPC_LA08_N     D23
 #     12     -     VCCIO_HPC_VADJ
+#
+# D16 38     H25   HPC_LA21_P     E21
+# D17 28     C19   HPC_LA14_N     F23
+# D18 26     H19   HPC_LA15_P     A22
+# D19 24     H20   HPC_LA15_N     A23
+# D20 22     G21   HPC_LA20_P     H18
+# D21 20     G22   HPC_LA20_N     J18
+# D22 18     G15   HPC_LA12_P     D24
+# D23 16     G16   HPC_LA12_N     D25
+# D24 37     G18   HPC_LA16_P     C22
+# D25 35     G19   HPC_LA16_N     B22
+# D26 33     D20   HPC_LA17_CC_P  G25
+# D27 31     D21   HPC_LA17_CC_N  G26
+# D28 29     C22   HPC_LA18_CC_P  J27
+# D29 27     C23   HPC_LA18_CC_N  H27
+# D30 25     H22   HPC_LA19_P     F22
+# D31 23     H23   HPC_LA19_N     E22

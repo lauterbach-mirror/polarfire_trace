@@ -23,13 +23,15 @@ sd_create_scalar_port -sd_name $sd_name -port_name RESET_N -port_direction OUT -
 
 # trace pins
 sd_create_scalar_port -sd_name $sd_name -port_name oTraceClk -port_direction OUT
-sd_create_bus_port -sd_name $sd_name -port_name oTraceData -port_direction OUT -port_range "\[15:0\]"
+sd_create_bus_port -sd_name $sd_name -port_name oTraceData -port_direction OUT -port_range "\[[expr $bits_phys - 1]:0\]"
 
 # components
 sd_instantiate_component -sd_name $sd_name -component_name clocks_and_resets -instance_name clocks_and_resets_0
 sd_instantiate_component -sd_name $sd_name -component_name $mss_name -instance_name mss_0
 sd_instantiate_component -sd_name $sd_name -component_name fic1ic -instance_name fic1ic_0
 sd_instantiate_hdl_core -sd_name $sd_name -hdl_core_name axi_to_pti_wrapper -instance_name axi_to_pti_wrapper_0
+sd_configure_core_instance -sd_name $sd_name -instance_name axi_to_pti_wrapper_0 -params "gOutBits:$bits_used"
+sd_save_core_instance_config -sd_name $sd_name -instance_name axi_to_pti_wrapper_0
 
 # clock pin connections
 source $board_path/cr/2_connect_pins.tcl
@@ -64,7 +66,14 @@ sd_connect_pins -sd_name $sd_name -pin_names {"axi_to_pti_wrapper_0:axi4slave" "
 
 # Trace output connections
 sd_connect_pins -sd_name $sd_name -pin_names {"axi_to_pti_wrapper_0:oTraceClk" "oTraceClk" }
-sd_connect_pins -sd_name $sd_name -pin_names {"axi_to_pti_wrapper_0:oTraceData" "oTraceData" }
+if {$bits_used == $bits_phys} {
+	sd_connect_pins -sd_name $sd_name -pin_names {"axi_to_pti_wrapper_0:oTraceData" "oTraceData" }
+} else {
+	sd_create_pin_slices -sd_name $sd_name -pin_name oTraceData -pin_slices "\[[expr $bits_phys - 1]:$bits_used\]"
+	sd_create_pin_slices -sd_name $sd_name -pin_name oTraceData -pin_slices "\[[expr $bits_used - 1]:0\]"
+	sd_connect_pins -sd_name $sd_name -pin_names "\"axi_to_pti_wrapper_0:oTraceData\" \"oTraceData\[[expr $bits_used - 1]:0\]\""
+	sd_connect_pins_to_constant -sd_name $sd_name -pin_names "oTraceData\[[expr $bits_phys - 1]:$bits_used\]" -value GND
+}
 
 auto_promote_pad_pins -promote_all 1
 save_smartdesign -sd_name $sd_name

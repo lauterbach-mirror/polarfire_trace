@@ -4,6 +4,9 @@ use ieee.std_logic_1164.all;
 use work.axi4_fic1_from_mss_pkg;
 
 entity axi_to_pti_wrapper is
+	generic (
+		gOutBits:       positive := 16 -- must be a power of two
+	);
 	port (
 		iRstN:      in  std_logic;
 		iClk:       in  std_logic;
@@ -43,7 +46,7 @@ entity axi_to_pti_wrapper is
 		RDATA:      out std_logic_vector(63 downto 0);
 
 		oTraceClk:  out std_logic;
-		oTraceData: out std_logic_vector(15 downto 0)
+		oTraceData: out std_logic_vector(gOutBits - 1 downto 0)
 	);
 end entity;
 
@@ -53,7 +56,9 @@ architecture behavioral of axi_to_pti_wrapper is
 begin
 	wRst <= not iRstN;
 
-	sAxiToPti: entity work.axi_to_pti port map (
+	sAxiToPti: entity work.axi_to_pti generic map (
+		gOutBits        => gOutBits
+	) port map (
 		iRst            => wRst,
 		iClk            => iClk,
 

@@ -20,13 +20,14 @@ We support the following adaptions and evaluation boards:
 * PolarFire® SoC Video Kit via FMC connector using one of the following adapters:
 
   * Lauterbach [LA-2785](https://www.lauterbach.com/products/LA-2785);
-    This adapter would also allow testing 32-bit parallel trace or Aurora/HSSTP trace, but neither has been implemented yet.
+    This adapter allows up to 32-bit parallel trace.
+    It would also allow testing Aurora/HSSTP trace, but that has not been implemented yet.
   * Xilinx/AMD [FMC XM105](https://www.xilinx.com/products/boards-and-kits/hw-fmc-xm105-g.html) card;
     This adapter only allows 16-bit parallel trace.
 
   For 16-bit parallel trace, these adapters are pin compatible, so the same FPGA design can support both cards.
   For the converter's pin map, refer to `script_support/videokit/io_videokit_fmc.pdc` in this repository.
-* PolarFire® SoC FPGA Icicle Kit via RPi connector using Lauterach [LA-3884](https://www.lauterbach.com/products/LA-3884);
+* PolarFire® SoC FPGA Icicle Kit via RPi connector using Lauterbach [LA-3884](https://www.lauterbach.com/products/LA-3884);
   For the converter's pin map, refer to `script_support/icicle/io_icicle_rpi.pdc` in this repository.
 
 Of course, trace is also possible with other boards, but for these, the user will need to create their own FPGA design.
@@ -56,12 +57,13 @@ The scripts require exactly Libero 2023.2.
 1. Start Libero.
 2. Invoke Project→Execute Script…
 3. Select either `generate_icicle_project.tcl` or `generate_videokit_project.tcl`, depending on the desired evaluation board.
-   The script needs no arguments.
+   You can specify the number of trace data bits `<n>` (4, 8, 16 or 32) as an argument.
+   The default is 16 bits.
 4. Click Run.
-   This generates the new project as `trace_icicle` or `trace_videokit` in the same directory as the tcl scripts.
+   This generates the new project as `trace_icicle_<n>` or `trace_videokit_<n>` in the same directory as the tcl scripts.
    Note that all the settings from the `script_support/` directory as well as all the HDL files from the `axi_to_pti/` directory are copied/imported into the project.
    Changing them after running the script will have no effect.
-   Re-running the script will erase and regenerate the `trace_icicle`/`trace_videokit` directory, so all modifications will be lost.
+   Re-running the script will erase and regenerate the `trace_icicle_<n>`/`trace_videokit_<n>` directory, so all modifications will be lost.
 5. Double-click “Place and Route” in the “Design Flow” tab.
    This will run the complete implementation of the design.
 6. Double-click “Export Bitstream” in the “Design Flow” tab.
@@ -88,7 +90,7 @@ These instructions were tested with Libero 2023.2, but should work with future r
 7. Select “AXI4/AMBA/AMBA4/slave”, click “OK”.
 8. The default assignments should be OK. Optionally change the name of the bus interface, then click “Apply” and “Close”.
 9. Click “OK”.
-10. Instantiate the `axi_to_pti_wrapper` HDL+ component in your design.
+10. Instantiate the `axi_to_pti_wrapper` HDL+ component in your design and set the `gOutBits` parameters to the desired trace port size.
 11. Connect the `oTraceClk` and `oTraceData` outputs to FPGA pins. These will also need matching I/O constraints matching the board schematic.
 12. Connect the AXI interface to either the `FIC_0_AXI4_INITIATOR` or `FIC_1_AXI4_INITIATOR` interfaces of the HSS.
     You will need a CoreAXI4Interconnect component between the HSS and the `axi_to_pti_wrapper` instance.
