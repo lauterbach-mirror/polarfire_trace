@@ -5,6 +5,9 @@ use ieee.numeric_std.all;
 use work.axi4_fic1_from_mss_pkg;
 
 entity axi_to_pti is
+	generic (
+		gOutBits:       positive := 16 -- must be a power of two
+	);
 	port (
 		iRst:       in  std_logic;
 		iClk:       in  std_logic;
@@ -13,7 +16,7 @@ entity axi_to_pti is
 		oMiso:      out axi4_fic1_from_mss_pkg.tMISO;
 
 		oTraceClk:  out std_logic;
-		oTraceData: out std_logic_vector(15 downto 0)
+		oTraceData: out std_logic_vector(gOutBits - 1 downto 0)
 	);
 end entity;
 
@@ -39,7 +42,7 @@ architecture behavioral of axi_to_pti is
 	signal wPackedData:         std_logic_vector(63 downto 0);
 	signal wPackedReady:        std_logic;
 
-	signal wReadData:           std_logic_vector(31 downto 0);
+	signal wReadData:           std_logic_vector(2 * gOutBits - 1 downto 0);
 
 begin
 	-- Convert AXI memory-mapped write channel to stream with individual data
@@ -133,7 +136,7 @@ begin
 
 	sReader: entity work.tpiu_output_fifo_reader generic map (
 		gInBits         => 64,
-		gOutBits        => 32
+		gOutBits        => gOutBits * 2
 	) port map (
 		iClk            => iClk,
 		iRst            => iRst,
@@ -145,7 +148,7 @@ begin
 	);
 
 	sDdr: entity work.tpiu_ddr_pfio generic map (
-		gOutBits        => 16
+		gOutBits        => gOutBits
 	) port map (
 		iClk            => iClk,
 		iRst            => iRst,
