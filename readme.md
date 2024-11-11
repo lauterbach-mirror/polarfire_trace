@@ -10,7 +10,7 @@ Off-chip trace on this platform requires a component in the FPGA that receives t
 The SMB is normally used for on-chip trace and uses internal RAM or SDRAM as a trace buffer.
 However, in this application, the Data is written to a small 4-KiB address range implemented by the `axi_to_pti` IP included in this repository.
 
-Currently, the converter IP uses a single clock source both for the AXI interface as well as for trace output and is hardcoded to use 16 data bits.
+Currently, the converter IP uses a single clock source both for the AXI interface as well as for trace output.
 This can be changed, see the comments in `axi_to_pti/axi_to_pti.vhd`.
 
 ## Supported evaluation boards
