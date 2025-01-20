@@ -114,7 +114,7 @@ begin
 		oData  => oMiso.b.id
 	);
 
-	pCombinatorial: process(rState, wXWrReady, wXRdValid, wXRdLast, wXRdAligned, wXRdId, wBValid, iMosi, iStreamReady)
+	pCombinatorial: process(rState, wXWrReady, wXRdValid, wXRdLast, wXRdAligned, wXRdId, wBReady, iMosi, iStreamReady)
 		function fAddrInc(cAddr: tAddr; cSize: axi4_fic1_from_mss_pkg.tSize) return tAddr is
 		begin
 			case cSize is
