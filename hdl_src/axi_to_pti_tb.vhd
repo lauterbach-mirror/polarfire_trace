@@ -20,7 +20,7 @@ begin
 	wRst <= '0' after 1 ns;
 	wClk <= wClk xnor wDone after 5 ns;
 
-	sUut: entity work.axi_to_pti port map (
+	sUut: entity work.axi_to_pti_impl port map (
 		iRst       => wRst,
 		iClk       => wClk,
 		iMosi      => wMosi,

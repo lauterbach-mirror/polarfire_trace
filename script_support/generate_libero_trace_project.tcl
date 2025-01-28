@@ -56,64 +56,14 @@ download_core -vlnv {Actel:SgCore:PF_CCC:2.2.220} -location {www.microchip-ip.co
 download_core -vlnv {Actel:SgCore:PF_CLK_DIV:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
+download_core -vlnv {Actel:SgCore:PF_IO:2.0.104} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microsemi:SgCore:PFSOC_INIT_MONITOR:1.0.307} -location {www.microchip-ip.com/repositories/SgCore}
 
 file mkdir $project_dir/mss
 exec $mss_config_loc -GENERATE -CONFIGURATION_FILE:$board_path/$mss_name.cfg -OUTPUT_DIR:$project_dir/mss
 import_mss_component -file $project_dir/mss/$mss_name.cxz
 
-import_files -library work -hdl_source axi_to_pti/axi4_fic1_from_mss_pkg.vhd
-import_files -library work -hdl_source axi_to_pti/axi4_fic1_from_mss_to_stream.vhd
-import_files -library work -hdl_source axi_to_pti/axi_to_pti.vhd
-import_files -library work -hdl_source axi_to_pti/axi_to_pti_wrapper.vhd
-import_files -library work -hdl_source axi_to_pti/ddr_output_iod.v
-import_files -library work -hdl_source axi_to_pti/FifoScReg.vhd
-import_files -library work -hdl_source axi_to_pti/smb_compress.vhd
-import_files -library work -hdl_source axi_to_pti/smb_sync.vhd
-import_files -library work -hdl_source axi_to_pti/tpiu_ddr_pfio.vhd
-import_files -library work -hdl_source axi_to_pti/tpiu_output_fifo_reader.vhd
-import_files -library work -hdl_source axi_to_pti/tpiu_packer_control.vhd
-import_files -library work -hdl_source axi_to_pti/tpiu_packer_data.vhd
-import_files -library work -hdl_source axi_to_pti/tpiu_packer_output.vhd
-import_files -library work -hdl_source axi_to_pti/tpiu_packer_pkg.vhd
-import_files -library work -hdl_source axi_to_pti/tpiu_packer_scheduler.vhd
-import_files -library work -hdl_source axi_to_pti/tpiu_packer.vhd
-import_files -library work -hdl_source axi_to_pti/util_pkg.vhd
-build_design_hierarchy
-
-create_hdl_core -file hdl/axi_to_pti_wrapper.vhd -module axi_to_pti_wrapper
-hdl_core_add_bif -hdl_core_name axi_to_pti_wrapper -bif_definition AXI4:AMBA:AMBA4:slave -bif_name axi4slave -signal_map {
-	"AWID:AWID"
-	"AWADDR:AWADDR"
-	"AWLEN:AWLEN"
-	"AWSIZE:AWSIZE"
-	"AWBURST:AWBURST"
-	"AWVALID:AWVALID"
-	"AWREADY:AWREADY"
-	"WDATA:WDATA"
-	"WSTRB:WSTRB"
-	"WLAST:WLAST"
-	"WVALID:WVALID"
-	"WREADY:WREADY"
-	"BID:BID"
-	"BRESP:BRESP"
-	"BVALID:BVALID"
-	"BREADY:BREADY"
-	"ARID:ARID"
-	"ARADDR:ARADDR"
-	"ARLEN:ARLEN"
-	"ARSIZE:ARSIZE"
-	"ARBURST:ARBURST"
-	"ARVALID:ARVALID"
-	"ARREADY:ARREADY"
-	"RID:RID"
-	"RDATA:RDATA"
-	"RRESP:RRESP"
-	"RLAST:RLAST"
-	"RVALID:RVALID"
-	"RREADY:RREADY"
-}
-build_design_hierarchy
+source axi_to_pti.tcl
 
 source $board_path/cr/0_create_components.tcl
 
