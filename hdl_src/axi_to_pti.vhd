@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 
 use work.axi4_fic1_from_mss_pkg;
 
-entity axi_to_pti_wrapper is
+entity axi_to_pti is
 	generic (
 		gOutBits:       positive := 16 -- must be a power of two
 	);
@@ -50,13 +50,13 @@ entity axi_to_pti_wrapper is
 	);
 end entity;
 
-architecture behavioral of axi_to_pti_wrapper is
+architecture behavioral of axi_to_pti is
 	signal wRst: std_logic;
 
 begin
 	wRst <= not iRstN;
 
-	sAxiToPti: entity work.axi_to_pti generic map (
+	sAxiToPti: entity work.axi_to_pti_impl generic map (
 		gOutBits        => gOutBits
 	) port map (
 		iRst            => wRst,

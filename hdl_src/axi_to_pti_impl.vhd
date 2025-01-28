@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 use work.axi4_fic1_from_mss_pkg;
 
-entity axi_to_pti is
+entity axi_to_pti_impl is
 	generic (
 		gOutBits:       positive := 16 -- must be a power of two
 	);
@@ -20,7 +20,7 @@ entity axi_to_pti is
 	);
 end entity;
 
-architecture behavioral of axi_to_pti is
+architecture behavioral of axi_to_pti_impl is
 	signal wAxiStreamReady:     std_logic;
 	signal wAxiStreamValid:     std_logic;
 	signal wAxiStreamAligned:   std_logic;
