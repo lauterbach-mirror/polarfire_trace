@@ -4,14 +4,6 @@ if {![info exists project_name]} {
 	error "Do not execute this project directly!"
 }
 
-# // Check Libero version and path length to verify project can be created
-#
-if {[string compare [string range [get_libero_version] 0 5] "2023.2"]==0} {
-	puts "Libero v2023.2 detected."
-} else {
-	error "Incorrect Libero version. Please use Libero v2023.2 to run these scripts."
-}
-
 if { [lindex $tcl_platform(os) 0]  == "Windows" } {
 	if {[string length [pwd]] < 90} {
 		puts "Project path length ok."
