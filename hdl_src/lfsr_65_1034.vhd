@@ -1,0 +1,151 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity lfsr_65_1034 is
+	port (
+		iData: in  std_logic_vector(64 downto 0);
+		oData: out std_logic_vector(64 downto 0)
+	);
+end entity;
+
+architecture behavioral of lfsr_65_1034 is
+begin
+	-- { 65, 47, 0 } times 1024
+	--oData(64) <= iData(11) xor iData(18) xor iData(29) xor iData(48) xor iData(54);
+	--oData(63) <= iData(10) xor iData(17) xor iData(28) xor iData(47) xor iData(53);
+	--oData(62) <= iData( 9) xor iData(16) xor iData(27) xor iData(46) xor iData(52);
+	--oData(61) <= iData( 8) xor iData(15) xor iData(26) xor iData(45) xor iData(51);
+	--oData(60) <= iData( 7) xor iData(14) xor iData(25) xor iData(44) xor iData(50);
+	--oData(59) <= iData( 6) xor iData(13) xor iData(24) xor iData(43) xor iData(49);
+	--oData(58) <= iData( 5) xor iData(12) xor iData(23) xor iData(42) xor iData(48);
+	--oData(57) <= iData( 4) xor iData(11) xor iData(22) xor iData(41) xor iData(47);
+	--oData(56) <= iData( 3) xor iData(10) xor iData(21) xor iData(40) xor iData(46);
+	--oData(55) <= iData( 2) xor iData( 9) xor iData(20) xor iData(39) xor iData(45);
+	--oData(54) <= iData( 1) xor iData( 8) xor iData(19) xor iData(38) xor iData(44);
+	--oData(53) <= iData( 0) xor iData( 7) xor iData(18) xor iData(37) xor iData(43);
+	--oData(52) <= iData( 6) xor iData(36) xor iData(42) xor iData(64);
+	--oData(51) <= iData( 5) xor iData(35) xor iData(41) xor iData(63);
+	--oData(50) <= iData( 4) xor iData(34) xor iData(40) xor iData(62);
+	--oData(49) <= iData( 3) xor iData(33) xor iData(39) xor iData(61);
+	--oData(48) <= iData( 2) xor iData(32) xor iData(38) xor iData(60);
+	--oData(47) <= iData( 1) xor iData(31) xor iData(37) xor iData(59);
+	--oData(46) <= iData( 0) xor iData(30) xor iData(36) xor iData(58);
+	--oData(45) <= iData(17) xor iData(29) xor iData(35) xor iData(57) xor iData(64);
+	--oData(44) <= iData(16) xor iData(28) xor iData(34) xor iData(56) xor iData(63);
+	--oData(43) <= iData(15) xor iData(27) xor iData(33) xor iData(55) xor iData(62);
+	--oData(42) <= iData(14) xor iData(26) xor iData(32) xor iData(54) xor iData(61);
+	--oData(41) <= iData(13) xor iData(25) xor iData(31) xor iData(53) xor iData(60);
+	--oData(40) <= iData(12) xor iData(24) xor iData(30) xor iData(52) xor iData(59);
+	--oData(39) <= iData(11) xor iData(23) xor iData(29) xor iData(51) xor iData(58);
+	--oData(38) <= iData(10) xor iData(22) xor iData(28) xor iData(50) xor iData(57);
+	--oData(37) <= iData( 9) xor iData(21) xor iData(27) xor iData(49) xor iData(56);
+	--oData(36) <= iData( 8) xor iData(20) xor iData(26) xor iData(48) xor iData(55);
+	--oData(35) <= iData( 7) xor iData(19) xor iData(25) xor iData(47) xor iData(54);
+	--oData(34) <= iData( 6) xor iData(18) xor iData(24) xor iData(46) xor iData(53);
+	--oData(33) <= iData( 5) xor iData(17) xor iData(23) xor iData(45) xor iData(52);
+	--oData(32) <= iData( 4) xor iData(16) xor iData(22) xor iData(44) xor iData(51);
+	--oData(31) <= iData( 3) xor iData(15) xor iData(21) xor iData(43) xor iData(50);
+	--oData(30) <= iData( 2) xor iData(14) xor iData(20) xor iData(42) xor iData(49);
+	--oData(29) <= iData( 1) xor iData(13) xor iData(19) xor iData(41) xor iData(48);
+	--oData(28) <= iData( 0) xor iData(12) xor iData(18) xor iData(40) xor iData(47);
+	--oData(27) <= iData(11) xor iData(39) xor iData(46) xor iData(64);
+	--oData(26) <= iData(10) xor iData(38) xor iData(45) xor iData(63);
+	--oData(25) <= iData( 9) xor iData(37) xor iData(44) xor iData(62);
+	--oData(24) <= iData( 8) xor iData(36) xor iData(43) xor iData(61);
+	--oData(23) <= iData( 7) xor iData(35) xor iData(42) xor iData(60);
+	--oData(22) <= iData( 6) xor iData(34) xor iData(41) xor iData(59);
+	--oData(21) <= iData( 5) xor iData(33) xor iData(40) xor iData(58);
+	--oData(20) <= iData( 4) xor iData(32) xor iData(39) xor iData(57);
+	--oData(19) <= iData( 3) xor iData(31) xor iData(38) xor iData(56);
+	--oData(18) <= iData( 2) xor iData(30) xor iData(37) xor iData(55);
+	--oData(17) <= iData( 1) xor iData(29) xor iData(36) xor iData(54);
+	--oData(16) <= iData( 0) xor iData(28) xor iData(35) xor iData(53);
+	--oData(15) <= iData(17) xor iData(27) xor iData(34) xor iData(52) xor iData(64);
+	--oData(14) <= iData(16) xor iData(26) xor iData(33) xor iData(51) xor iData(63);
+	--oData(13) <= iData(15) xor iData(25) xor iData(32) xor iData(50) xor iData(62);
+	--oData(12) <= iData(14) xor iData(24) xor iData(31) xor iData(49) xor iData(61);
+	--oData(11) <= iData(13) xor iData(23) xor iData(30) xor iData(48) xor iData(60);
+	--oData(10) <= iData(12) xor iData(22) xor iData(29) xor iData(47) xor iData(59);
+	--oData( 9) <= iData(11) xor iData(21) xor iData(28) xor iData(46) xor iData(58);
+	--oData( 8) <= iData(10) xor iData(20) xor iData(27) xor iData(45) xor iData(57);
+	--oData( 7) <= iData( 9) xor iData(19) xor iData(26) xor iData(44) xor iData(56);
+	--oData( 6) <= iData( 8) xor iData(18) xor iData(25) xor iData(43) xor iData(55);
+	--oData( 5) <= iData( 7) xor iData(17) xor iData(24) xor iData(42) xor iData(54);
+	--oData( 4) <= iData( 6) xor iData(16) xor iData(23) xor iData(41) xor iData(53);
+	--oData( 3) <= iData( 5) xor iData(15) xor iData(22) xor iData(40) xor iData(52);
+	--oData( 2) <= iData( 4) xor iData(14) xor iData(21) xor iData(39) xor iData(51);
+	--oData( 1) <= iData( 3) xor iData(13) xor iData(20) xor iData(38) xor iData(50);
+	--oData( 0) <= iData( 2) xor iData(12) xor iData(19) xor iData(37) xor iData(49);
+
+	-- { 65, 47, 0 } times 1034
+	-- advantage: 47 bits are xor'd with themselves, which should reduce routing usage
+	--           rol 0         rol 6         rol 25        rol 18        rol 36        rol 43        rol 53
+	oData(64) <= iData(64) xor iData(58) xor iData(39)               xor iData(28) xor iData(21);
+	oData(63) <= iData(63) xor iData(57) xor iData(38)               xor iData(27) xor iData(20);
+	oData(62) <= iData(62) xor iData(56) xor iData(37)               xor iData(26) xor iData(19);
+	oData(61) <= iData(61) xor iData(55) xor iData(36)               xor iData(25) xor iData(18);
+	oData(60) <= iData(60) xor iData(54) xor iData(35)               xor iData(24) xor iData(17);
+	oData(59) <= iData(59) xor iData(53) xor iData(34)               xor iData(23) xor iData(16);
+	oData(58) <= iData(58) xor iData(52) xor iData(33)               xor iData(22) xor iData(15);
+	oData(57) <= iData(57) xor iData(51) xor iData(32)               xor iData(21) xor iData(14);
+	oData(56) <= iData(56) xor iData(50) xor iData(31)               xor iData(20) xor iData(13);
+	oData(55) <= iData(55) xor iData(49) xor iData(30)               xor iData(19) xor iData(12);
+	oData(54) <= iData(54) xor iData(48) xor iData(29)               xor iData(18) xor iData(11);
+	oData(53) <= iData(53) xor iData(47) xor iData(28)               xor iData(17) xor iData(10);
+	oData(52) <= iData(52) xor iData(46) xor iData(27)               xor iData(16) xor iData( 9);
+	oData(51) <= iData(51) xor iData(45) xor iData(26)               xor iData(15) xor iData( 8);
+	oData(50) <= iData(50) xor iData(44) xor iData(25)               xor iData(14) xor iData( 7);
+	oData(49) <= iData(49) xor iData(43) xor iData(24)               xor iData(13) xor iData( 6);
+	oData(48) <= iData(48) xor iData(42) xor iData(23)               xor iData(12) xor iData( 5);
+	oData(47) <= iData(47) xor iData(41) xor iData(22)               xor iData(11) xor iData( 4);
+	oData(46) <= iData(46) xor iData(40) xor iData(21)               xor iData(10) xor iData( 3);
+	oData(45) <= iData(45) xor iData(39) xor iData(20)               xor iData( 9) xor iData( 2);
+	oData(44) <= iData(44) xor iData(38) xor iData(19)               xor iData( 8) xor iData( 1);
+	oData(43) <= iData(43) xor iData(37) xor iData(18)               xor iData( 7) xor iData( 0);
+	oData(42) <= iData(42) xor iData(36)                             xor iData( 6) xor iData(64);
+	oData(41) <= iData(41) xor iData(35)                             xor iData( 5) xor iData(63);
+	oData(40) <= iData(40) xor iData(34)                             xor iData( 4) xor iData(62);
+	oData(39) <= iData(39) xor iData(33)                             xor iData( 3) xor iData(61);
+	oData(38) <= iData(38) xor iData(32)                             xor iData( 2) xor iData(60);
+	oData(37) <= iData(37) xor iData(31)                             xor iData( 1) xor iData(59);
+	oData(36) <= iData(36) xor iData(30)                             xor iData( 0) xor iData(58);
+
+	oData(35) <= iData(35) xor iData(29)               xor iData(17) xor iData(64) xor iData(57);
+	oData(34) <= iData(34) xor iData(28)               xor iData(16) xor iData(63) xor iData(56);
+	oData(33) <= iData(33) xor iData(27)               xor iData(15) xor iData(62) xor iData(55);
+	oData(32) <= iData(32) xor iData(26)               xor iData(14) xor iData(61) xor iData(54);
+	oData(31) <= iData(31) xor iData(25)               xor iData(13) xor iData(60) xor iData(53);
+	oData(30) <= iData(30) xor iData(24)               xor iData(12) xor iData(59) xor iData(52);
+	oData(29) <= iData(29) xor iData(23)               xor iData(11) xor iData(58) xor iData(51);
+	oData(28) <= iData(28) xor iData(22)               xor iData(10) xor iData(57) xor iData(50);
+	oData(27) <= iData(27) xor iData(21)               xor iData( 9) xor iData(56) xor iData(49);
+	oData(26) <= iData(26) xor iData(20)               xor iData( 8) xor iData(55) xor iData(48);
+	oData(25) <= iData(25) xor iData(19)               xor iData( 7) xor iData(54) xor iData(47);
+	oData(24) <= iData(24) xor iData(18)               xor iData( 6) xor iData(53) xor iData(46);
+	oData(23) <= iData(23) xor iData(17)               xor iData( 5) xor iData(52) xor iData(45);
+	oData(22) <= iData(22) xor iData(16)               xor iData( 4) xor iData(51) xor iData(44);
+	oData(21) <= iData(21) xor iData(15)               xor iData( 3) xor iData(50) xor iData(43);
+	oData(20) <= iData(20) xor iData(14)               xor iData( 2) xor iData(49) xor iData(42);
+	oData(19) <= iData(19) xor iData(13)               xor iData( 1) xor iData(48) xor iData(41);
+	oData(18) <= iData(18) xor iData(12)               xor iData( 0) xor iData(47) xor iData(40);
+
+	oData(17) <=               iData(11)               xor iData(64) xor iData(46) xor iData(39);
+	oData(16) <=               iData(10)               xor iData(63) xor iData(45) xor iData(38);
+	oData(15) <=               iData( 9)               xor iData(62) xor iData(44) xor iData(37);
+	oData(14) <=               iData( 8)               xor iData(61) xor iData(43) xor iData(36);
+	oData(13) <=               iData( 7)               xor iData(60) xor iData(42) xor iData(35);
+	oData(12) <=               iData( 6)               xor iData(59) xor iData(41) xor iData(34);
+	oData(11) <=               iData( 5)               xor iData(58) xor iData(40) xor iData(33);
+	oData(10) <=               iData( 4)               xor iData(57) xor iData(39) xor iData(32);
+	oData( 9) <=               iData( 3)               xor iData(56) xor iData(38) xor iData(31);
+	oData( 8) <=               iData( 2)               xor iData(55) xor iData(37) xor iData(30);
+	oData( 7) <=               iData( 1)               xor iData(54) xor iData(36) xor iData(29);
+	oData( 6) <=               iData( 0)               xor iData(53) xor iData(35) xor iData(28);
+	oData( 5) <=               iData(64)               xor iData(52) xor iData(34) xor iData(27) xor iData(17);
+	oData( 4) <=               iData(63)               xor iData(51) xor iData(33) xor iData(26) xor iData(16);
+	oData( 3) <=               iData(62)               xor iData(50) xor iData(32) xor iData(25) xor iData(15);
+	oData( 2) <=               iData(61)               xor iData(49) xor iData(31) xor iData(24) xor iData(14);
+	oData( 1) <=               iData(60)               xor iData(48) xor iData(30) xor iData(23) xor iData(13);
+	oData( 0) <=               iData(59)               xor iData(47) xor iData(29) xor iData(22) xor iData(12);
+end architecture;
