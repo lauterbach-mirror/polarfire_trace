@@ -5,7 +5,6 @@ This repository contains resources to implement off-chip trace of the hard RISC-
 Trace can be exported using parallel trace (4, 8, 16 or 32 bit) 16-bit parallel with a PowerTrace 2/3 with an AutoFocus-II preprocessor.
 Alternatively, serial trace can be used with a PowerTrace Serial.
 Currently, only one serial lane is supported, but running at 10 Gbit/s, this is as fast as a 16-bit parallel trace.
-PCIe trace would also be possible, but requires more changes to TRACE32.
 
 Off-chip trace on this platform requires a component in the FPGA that receives trace data from the SMB (System Memory Buffer) component in the MSS and forwards it to the off-chip trace port.
 The SMB is normally used for on-chip trace and uses internal RAM or SDRAM as a trace buffer.
