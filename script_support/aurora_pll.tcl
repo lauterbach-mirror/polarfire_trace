@@ -9,7 +9,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_TX_PLL:2.0.304} -component
 "TxPLL_EXT_WAVE_SEL:0"  \
 "TxPLL_FAB_LOCK_EN:false"  \
 "TxPLL_FAB_REF:200"  \
-"TxPLL_INTEGER_MODE:false"  \
+"TxPLL_INTEGER_MODE:true"  \
 "TxPLL_JITTER_MODE_AT_POWERUP:true"  \
 "TxPLL_JITTER_MODE_CUT_OFF_FREQ:5000"  \
 "TxPLL_JITTER_MODE_OPTIMIZE_FOR:0"  \
@@ -20,7 +20,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_TX_PLL:2.0.304} -component
 "TxPLL_LANE_ALIGNMENT_EN:false"  \
 "TxPLL_MODE:NORMAL"  \
 "TxPLL_OUT:5000.000"  \
-"TxPLL_REF:200"  \
+"TxPLL_REF:200.0000000"  \
 "TxPLL_RN_FILTER:false"  \
 "TxPLL_SOURCE:DEDICATED"  \
 "TxPLL_SSM_DEPTH:0"  \
