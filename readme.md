@@ -7,12 +7,9 @@ Alternatively, serial trace can be used with a PowerTrace Serial.
 Currently, only one serial lane is supported, but running at 10 Gbit/s, this is as fast as a 16-bit parallel trace.
 PCIe trace would also be possible, but requires more changes to TRACE32.
 
-Off-chip trace on this platform requires a component in the FPGA that receives trace data from the SMB (System Memory Buffer) component in the HSS and forwards it to the off-chip trace port.
+Off-chip trace on this platform requires a component in the FPGA that receives trace data from the SMB (System Memory Buffer) component in the MSS and forwards it to the off-chip trace port.
 The SMB is normally used for on-chip trace and uses internal RAM or SDRAM as a trace buffer.
-However, in this application, the Data is written to a small 4-KiB address range implemented by the `axi_to_pti` IP included in this repository.
-
-Currently, the converter IP uses a single clock source both for the AXI interface as well as for trace output.
-This can be changed, see the comments in `axi_to_pti/axi_to_pti.vhd`.
+However, in this application, the data is written to a small 4-KiB address range implemented by the `axi_to_pti` or `axi_to_aurora` IP included in this repository.
 
 ## Supported evaluation boards
 
@@ -22,7 +19,6 @@ We support the following adaptions and evaluation boards:
 
   * Lauterbach [LA-2785](https://www.lauterbach.com/products/LA-2785);
     This adapter allows up to 32-bit parallel trace or serial trace.
-    It would also allow testing Aurora/HSSTP trace, but that has not been implemented yet.
   * Xilinx/AMD [FMC XM105](https://www.xilinx.com/products/boards-and-kits/hw-fmc-xm105-g.html) card;
     This adapter only allows 16-bit parallel trace.
 
@@ -53,7 +49,7 @@ Instructions:
 
 ## Generating the example bitstreams with Libero
 
-The following instructions will generate a minimal FPGA project with just the HSS (hard software services), trace and SDRAM connection.
+The following instructions will generate a minimal FPGA project with just the MSS (microprocessor subsystem), trace and SDRAM connection.
 The scripts require exactly Libero 2023.2.
 
 1. Start Libero.
@@ -63,7 +59,7 @@ The scripts require exactly Libero 2023.2.
    The default is 16 bits.
 4. Click Run.
    This generates the new project as `trace_icicle_<n>` or `trace_videokit_<n>` in the same directory as the tcl scripts.
-   Note that all the settings from the `script_support/` directory as well as all the HDL files from the `axi_to_pti/` directory are copied/imported into the project.
+   Note that all the settings from the `script_support/` directory as well as all the HDL files from the `hdl_src/` directory are copied/imported into the project.
    Changing them after running the script will have no effect.
    Re-running the script will erase and regenerate the `trace_icicle_<n>`/`trace_videokit_<n>` directory, so all modifications will be lost.
 5. Double-click “Place and Route” in the “Design Flow” tab.
@@ -88,11 +84,11 @@ These instructions were tested with Libero 2024.2, but should work with future r
 3. Select `axi_to_pti.tcl` and click Run.
 4. Instantiate the `axi_to_pti` HDL+ component in your design and set the `gOutBits` parameters to the desired trace port size.
 5. Connect the `oTraceClk` and `oTraceData` outputs to FPGA pins. These will also need matching I/O constraints matching the board schematic.
-6. Connect the AXI interface to either the `FIC_0_AXI4_INITIATOR` or `FIC_1_AXI4_INITIATOR` interfaces of the HSS.
-   You will need a CoreAXI4Interconnect component between the HSS and the `axi_to_pti_wrapper` instance.
+6. Connect the AXI interface to either the `FIC_0_AXI4_INITIATOR` or `FIC_1_AXI4_INITIATOR` interfaces of the MSS.
+   You will need a CoreAXI4Interconnect component between the MSS and the `axi_to_pti_wrapper` instance.
    The converter IP only needs a 4-KiB address range and only needs write access.
    Check the example designs for more details.
-7. The base address where the HSS can write to the converter IP needs to be configured in TRACE32 using the `SYStem.CONFIG USOCSMB.BufferBase` command.
+7. The base address where the MSS can write to the converter IP needs to be configured in TRACE32 using the `SYStem.CONFIG USOCSMB.BufferBase` command.
 
 ## Integrating the `axi_to_aurora` IP into an existing FPGA design
 
@@ -108,12 +104,15 @@ These instructions were tested with Libero 2024.2, but should work with future r
 2. Invoke Project→Execute Script…
 3. Select `axi_to_aurora.tcl` and click Run.
 4. Instantiate the `axi_to_aurora` HDL+ component in your design.
-5. Instantiate a `PF_XCVR_ERM` and supporting clocking infrastructure.
-   This is highly specific to the used board, clocking sources and the rest of the project.
-   Only the TX lane of the transceiver is needed.
+5. If not already in your design, Instantiate a Transceiver Interface (`PF_XCVR_ERM`) and supporting clocking infrastructure (Transmit PLL and Transceiver Reference clock).
+   For the serial trace to work properly ensure to
+    - set Transmit PLL into Integer Mode and
+    - set `PF_XCVR_ERM` to have 1 TX lane configured with 8b10b encoding and 32 bit TX PCS-Fabric Interface width.
+
+   All other parameters (datarate, frequency, clock source) are highly specific to the used board, clocking sources, and the rest of the project.
    Refer to the videokit example project for details.
-6. Connect the AXI interface to either the `FIC_0_AXI4_INITIATOR` or `FIC_1_AXI4_INITIATOR` interfaces of the HSS.
-   You will need a CoreAXI4Interconnect component between the HSS and the `axi_to_pti_wrapper` instance.
+6. Connect the AXI interface to either the `FIC_0_AXI4_INITIATOR` or `FIC_1_AXI4_INITIATOR` interfaces of the MSS.
+   You will need a CoreAXI4Interconnect component between the MSS and the `axi_to_pti_wrapper` instance.
    The converter IP only needs a 4-KiB address range and only needs write access.
    Check the example designs for more details.
-7. The base address where the HSS can write to the converter IP needs to be configured in TRACE32 using the `SYStem.CONFIG USOCSMB.BufferBase` command.
+7. The base address where the MSS can write to the converter IP needs to be configured in TRACE32 using the `SYStem.CONFIG USOCSMB.BufferBase` command.
