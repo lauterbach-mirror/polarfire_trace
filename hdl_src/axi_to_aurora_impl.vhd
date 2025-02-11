@@ -5,6 +5,9 @@ use ieee.numeric_std.all;
 use work.axi4_fic1_from_mss_pkg;
 
 entity axi_to_aurora_impl is
+	generic (
+		gLanes:         positive := 1 -- must be 1 or 2
+	);
 	port (
 		iRst:           in  std_logic;
 		iClkAxi:        in  std_logic;
@@ -12,18 +15,19 @@ entity axi_to_aurora_impl is
 		iMosi:          in  axi4_fic1_from_mss_pkg.tMOSI;
 		oMiso:          out axi4_fic1_from_mss_pkg.tMISO;
 
-		iClkUser:       in  std_logic;
-		iClkUserStable: in  std_logic;
+		iClkUser:       in  std_logic_vector(gLanes - 1 downto 0);
+		iClkUserStable: in  std_logic_vector(gLanes - 1 downto 0);
 		iPllLock:       in  std_logic;
 
-		oPcsRstN:       out std_logic;
-		oPmaRstN:       out std_logic;
+		oPhyRstN:       out std_logic;
 		oTxData:        out std_logic_vector(31 downto 0);
 		oTxK:           out std_logic_vector( 3 downto 0)
 	);
 end entity;
 
 architecture behavioral of axi_to_aurora_impl is
+	constant cBytesPerLane:     positive := 4 / gLanes;
+
 	signal wRstUser:            std_logic;
 
 	signal wAxiStreamReady:     std_logic;
@@ -55,6 +59,9 @@ architecture behavioral of axi_to_aurora_impl is
 	signal wFramedValid:        std_logic;
 	signal wFramedLast:         std_logic;
 	signal wFramedData:         std_logic_vector(31 downto 0);
+
+	signal wTxData:             std_logic_vector(31 downto 0);
+	signal wTxK:                std_logic_vector( 3 downto 0);
 
 begin
 	-- Convert AXI memory-mapped write channel to stream with individual data
@@ -153,14 +160,14 @@ begin
 		iValid          => '1',
 		iData           => wPackedData,
 
-		iRdClk          => iClkUser,
+		iRdClk          => iClkUser(0),
 		iReady          => wUserFifoReady,
 		oValid          => wUserFifoValid,
 		oData           => wUserFifoData
 	);
 
 	sFrame: entity work.aurora_frame port map (
-		iClk            => iClkUser,
+		iClk            => iClkUser(0),
 		iRst            => wRstUser,
 
 		oReady          => wUserFifoReady,
@@ -174,10 +181,10 @@ begin
 	);
 
 	sEncoder: entity work.aurora_encoder generic map (
-		gLanes          => 1,
-		gBytesPerLane   => 4
+		gLanes          => gLanes,
+		gBytesPerLane   => cBytesPerLane
 	) port map (
-		iClk            => iClkUser,
+		iClk            => iClkUser(0),
 		iRst            => wRstUser,
 
 		oReady          => wFramedReady,
@@ -186,20 +193,66 @@ begin
 		iEmpty          => (others => '0'),
 		iData           => wFramedData,
 
-		oData           => oTxData,
-		oDataK          => oTxK
+		oData           => wTxData,
+		oDataK          => wTxK
 	);
 
-	sResets: entity work.aurora_resets port map (
+	sResets: entity work.aurora_resets generic map (
+		gLanes          => gLanes
+	) port map (
 		iRst            => iRst,
 		iClkAxi         => iClkAxi,
-		iClkUser        => iClkUser,
+		iClkUser        => iClkUser(0),
 
 		iPllLock        => iPllLock,
 		iClkUserStable  => iClkUserStable,
 
 		oRstUser        => wRstUser,
-		oPcsRstN        => oPcsRstN,
-		oPmaRstN        => oPmaRstN
+		oPhyRstN        => oPhyRstN
 	);
+
+	eOneLane: if gLanes = 1 generate
+		-- no extra synchronization reqired, just one user clock
+		oTxData <= wTxData;
+		oTxK    <= wTxK;
+	end generate;
+
+	eMoreLanes: if gLanes /= 1 generate
+		eLane: for i in gLanes - 1 downto 0 generate
+			signal wValid: std_logic;
+			signal rReady: std_logic := '0';
+
+		begin
+			sFifo: entity work.FifoDcReg generic map (
+				gBits               => 18,
+				gLdDepth            => 3
+			) port map (
+				iRst                => wRstUser,
+
+				iWrClk              => iClkUser(0),
+				oReady              => open,
+				iValid              => '1',
+				iData(17 downto 16) => wTxK   ( 2 * (i + 1) - 1 downto  2 * i),
+				iData(15 downto  0) => wTxData(16 * (i + 1) - 1 downto 16 * i),
+
+				iRdClk              => iClkUser(i),
+				iReady              => rReady,
+				oValid              => wValid,
+				oData(17 downto 16) => oTxK   ( 2 * (i + 1) - 1 downto  2 * i),
+				oData(15 downto  0) => oTxData(16 * (i + 1) - 1 downto 16 * i)
+			);
+
+			pReady: process(wRstUser, iClkUser(i))
+			begin
+				if wRstUser = '1' then
+					rReady <= '0';
+				elsif rising_edge(iClkUser(i)) then
+					-- Start reading from FIFOs one clock after the first data so we
+					-- have one extra item in flight to accomodate
+					-- drift/metastability races.
+					rReady <= rReady or wValid;
+				end if;
+			end process;
+		end generate;
+	end generate;
 end architecture;

@@ -1,0 +1,17 @@
+set_io -port_name FMC_DP0_TXD_N -pin_name K33 -DIRECTION OUTPUT
+set_io -port_name FMC_DP0_TXD_P -pin_name K34 -DIRECTION OUTPUT
+#set_io -port_name FMC_DP1_TXD_N -pin_name M33 -DIRECTION OUTPUT
+#set_io -port_name FMC_DP1_TXD_P -pin_name M34 -DIRECTION OUTPUT
+
+# 100 MHz PCIe reference clock; should be 100 MHz even on any non-videokit
+# design that uses PCIe.
+set_io -port_name PCIE_REFCLK_N -pin_name U28 -DIRECTION INPUT
+set_io -port_name PCIE_REFCLK_P -pin_name U27 -DIRECTION INPUT
+
+# Clock from trace tool to target; can be set to a fixed divisor (e. g. 1/50)
+# of the desired bit rate and is therefore suitable as transceiver PLL input.
+# However, the clock is only present after the tool has been configured, so if
+# you use this, be careful about fully resetting the board after tool
+# configuration!
+#set_io -port_name FMC_GBTCLK0_N -pin_name L28 -DIRECTION INPUT
+#set_io -port_name FMC_GBTCLK0_P -pin_name L27 -DIRECTION INPUT

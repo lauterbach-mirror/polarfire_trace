@@ -71,7 +71,7 @@ source $board_path/cr/0_create_components.tcl
 source $src_path/fic1ic.tcl
 source $src_path/aurora_ref.tcl
 source $src_path/aurora_pll.tcl
-source $src_path/aurora_xcvr.tcl
+source $src_path/aurora_xcvr_$variant.tcl
 source $src_path/trace_top_aurora.tcl
 
 build_design_hierarchy

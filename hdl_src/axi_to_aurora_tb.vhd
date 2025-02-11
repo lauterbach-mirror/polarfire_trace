@@ -15,8 +15,7 @@ architecture behavioral of axi_to_aurora_tb is
 	signal wClkUser:       std_logic := '1';
 	signal wClkUserStable: std_logic;
 	signal wPllLock:       std_logic;
-	signal wPcsRstN:       std_logic;
-	signal wPmaRstN:       std_logic;
+	signal wPhyRstN:       std_logic;
 	signal wTxData:        std_logic_vector(31 downto 0);
 	signal wTxK:           std_logic_vector( 3 downto 0);
 	signal wDone:          std_logic := '0';
@@ -26,16 +25,19 @@ begin
 	wClkAxi <= wClkAxi xnor wDone after 5 ns;
 	wClkUser <= wClkUser xnor wDone after 3.141593 ns;
 
-	sUut: entity work.axi_to_aurora_impl port map (
+	sUut: entity work.axi_to_aurora_impl generic map (
+		gLanes              => 2
+	) port map (
 		iRst                => wRst,
 		iClkAxi             => wClkAxi,
 		iMosi               => wMosi,
 		oMiso               => wMiso,
-		iClkUser            => wClkUser,
-		iClkUserStable      => wClkUserStable,
+		iClkUser(0)         => wClkUser,
+		iClkUser(1)         => wClkUser,
+		iClkUserStable(0)   => wClkUserStable,
+		iClkUserStable(1)   => wClkUserStable,
 		iPllLock            => wPllLock,
-		oPcsRstN            => wPcsRstN,
-		oPmaRstN            => wPmaRstN,
+		oPhyRstN            => wPhyRstN,
 		oTxData             => wTxData,
 		oTxK                => wTxK
 	);
