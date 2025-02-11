@@ -57,6 +57,8 @@ The scripts require exactly Libero 2023.2.
 3. Select either `generate_icicle_project.tcl`, or `generate_videokit_project.tcl` or `generate_videokit_project_aurora.tcl`, depending on the desired evaluation board and trace type.
    For parallel trace, you can specify the number of trace data bits `<n>` (4, 8, 16 or 32) as an argument.
    The default is 16 bits.
+   For serial trace, you can specify `1lane` or `2lane` as an argument to choose the desired setup.
+   The default is `1lane`.
 4. Click Run.
    This generates the new project as `trace_icicle_<n>` or `trace_videokit_<n>` in the same directory as the tcl scripts.
    Note that all the settings from the `script_support/` directory as well as all the HDL files from the `hdl_src/` directory are copied/imported into the project.
