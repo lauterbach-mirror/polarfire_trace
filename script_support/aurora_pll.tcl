@@ -1,4 +1,4 @@
-create_and_configure_core -core_vlnv {Actel:SgCore:PF_TX_PLL:2.0.304} -component_name aurora_pll -params {\
+create_and_configure_core -core_vlnv {Actel:SgCore:PF_TX_PLL:2.0.304} -component_name {aurora_pll} -params {\
 "CORE:PF_TX_PLL"  \
 "INIT:0x0"  \
 "TxPLL_AUX_LOW_SEL:true"  \
@@ -20,7 +20,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_TX_PLL:2.0.304} -component
 "TxPLL_LANE_ALIGNMENT_EN:false"  \
 "TxPLL_MODE:NORMAL"  \
 "TxPLL_OUT:5000.000"  \
-"TxPLL_REF:200.0000000"  \
+"TxPLL_REF:100.0000000"  \
 "TxPLL_RN_FILTER:false"  \
 "TxPLL_SOURCE:DEDICATED"  \
 "TxPLL_SSM_DEPTH:0"  \

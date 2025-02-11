@@ -1,0 +1,81 @@
+LOCAL &args
+ENTRY %LINE &args
+
+LOCAL &cpu
+&cpu=STRing.SCANAndExtract("&args","CPU=","MPFS250T-U54")
+
+IF "&cpu"!=""
+(
+  RESet
+  SYStem.CPU &cpu
+)
+IF CPU()=="NONE"
+(
+  ECHO %ERROR "No CPU selected! Abort..."
+  ENDDO
+)
+
+SYStem.CONFIG USOCSMB.BufferBase D:0x3F00000000
+
+SYStem.CONFIG.TPIU Type Generic
+SYStem.CONFIG.TPIU ATBSource USOCSMB
+TPIU.PortMode Continuous
+
+SYStem.CONFIG.TRACEPORT Type AURORA
+SYStem.CONFIG.TRACEPORT TraceSource TPIU
+TRACEPORT.LaneCount     1Lane
+TRACEPORT.LaneSpeed     10000Mbps
+TRACEPORT.MsgBItEndian  LittleEndian
+TRACEPORT.MsgBYteEndian LittleEndian
+TRACEPORT.MsgWOrdEndian LittleEndian
+TRACEPORT.MsgLOngEndian LittleEndian
+TRACEPORT.StartsKiP     0.
+TRACEPORT.EndsKiP       0.
+
+; Not necessary with the example designs as they use the 100 MHz PCIe clock: We
+; can provide a reference clock via the HSSTP connector. If you use this
+; feature, take care to reset the FPGA after executing the following line (for
+; example, power cycle the board).
+;TRACEPORT.RefCLocK      1/50.
+
+Trace.METHOD Analyzer
+Analyzer.TraceCONNECT TRACEPORT
+Analyzer.Init
+
+SYStem.Mode Up
+
+IF CPU()=="MPFS250T-E51"
+(
+	Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
+)
+ELSE IF CPU()=="MPFS250T-U54"
+(
+	Data.LOAD.Elf ~~~~/sieve_ram_u54.elf /Quad /PlusVM /RelPATH
+	Register.Set PC background /CORE 1
+	Register.Set PC background /CORE 2
+	Register.Set PC background /CORE 3
+)
+
+Analyzer.state
+
+ENDDO
+
+configure_target_registers:
+	PRIVATE &mask &amp
+	&amp="&"
+
+	; bring up FIC1 interface
+	; SYSREG.SUBBLK_CLOCK_CR: Set FIC1 bit
+	&mask=1.<<25.
+	Data.Set MD:0x20002084 %Long Data.Long(MD:0x20002084)|&mask
+	; SYSREG.SOFT_RESET_CR: Clear FIC1 and FPGA bits
+	&mask=1.<<25.|1.<<17.
+	Data.Set MD:0x20002088 %Long Data.Long(MD:0x20002088)&(amp)~&mask
+	PER.Set.simple MD:0x20002010 %Long 1.
+
+	; Prevent MPU errors from trace master
+	; MPUCFG.TRACE.PMPCFG_SCB: No idea, just copy what seems to work
+	Data.Set MD:0x20005900 %Quad 0x1F00000FFFFFFFFF
+	Data.Set MD:0x20005908 %Quad 0x1F00000FFFFFFFFF
+
+	RETURN

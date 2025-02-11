@@ -2,21 +2,25 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity aurora_resets is
+	generic (
+		gLanes:         positive := 1
+	);
 	port (
 		iRst:           in  std_logic;
 		iClkAxi:        in  std_logic;
 		iClkUser:       in  std_logic;
 
 		iPllLock:       in  std_logic;
-		iClkUserStable: in  std_logic;
+		iClkUserStable: in  std_logic_vector(gLanes - 1 downto 0);
 
 		oRstUser:       out std_logic;
-		oPcsRstN:       out std_logic;
-		oPmaRstN:       out std_logic
+		oPhyRstN:       out std_logic
 	);
 end entity;
 
 architecture behavioral of aurora_resets is
+	constant cAllStable: std_logic_vector(gLanes - 1 downto 0) := (others => '1');
+
 	signal wRstAxi:  std_logic;
 	signal rRstAxi:  std_logic_vector(3 downto 0) := (others => '0');
 
@@ -39,10 +43,9 @@ begin
 	-- iClkUserStable here because I'm not sure whether these are affected by
 	-- one of the resets. iPllLock should definitely not be affected because
 	-- that PLL isa separate primitive from the transceiver itself.
-	oPcsRstN <= rRstAxi(0);
-	oPmaRstN <= rRstAxi(0);
+	oPhyRstN <= rRstAxi(0);
 
-	wRstUser <= not rRstAxi(0) or not iClkUserStable;
+	wRstUser <= '1' when rRstAxi(0) = '0' or iClkUserStable /= cAllStable else '0';
 	pRstUser: process(wRstUser, iClkUser)
 	begin
 		if wRstUser = '1' then

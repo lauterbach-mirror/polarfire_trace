@@ -4,7 +4,8 @@ This repository contains resources to implement off-chip trace of the hard RISC-
 
 Trace can be exported using parallel trace (4, 8, 16 or 32 bit) 16-bit parallel with a PowerTrace 2/3 with an AutoFocus-II preprocessor.
 Alternatively, serial trace can be used with a PowerTrace Serial.
-Currently, only one serial lane is supported, but running at 10 Gbit/s, this is as fast as a 16-bit parallel trace.
+Suggested serial configurations are one lane at 10 Gbit/s or two lanes at 5 GBit/s.
+Each configuration is as fast as a 16-bit parallel trace.
 
 Off-chip trace on this platform requires a component in the FPGA that receives trace data from the SMB (System Memory Buffer) component in the MSS and forwards it to the off-chip trace port.
 The SMB is normally used for on-chip trace and uses internal RAM or SDRAM as a trace buffer.
@@ -41,10 +42,10 @@ Lauterbach hardware/software requirements:
 
 Instructions:
 
-1. Use the scripts `lb_cmm/0_program_videokit_16.cmm`, `lb_cmm/1_program_videokit_1lane.cmm` or `lb_cmm/2_program_icicle_16.cmm` to program the FPGA.
+1. Use the scripts `lb_cmm/00_program_videokit_16.cmm`, `lb_cmm/01_program_videokit_1lane.cmm`, `lb_cmm/02_program_videokit_2lane.cmm` or `lb_cmm/03_program_icicle_16.cmm` to program the FPGA.
    This takes a few minutes, but only needs to be done once.
 2. If you use the icicle demo, set J46 to supply the trace reference voltage to the preprocessor.
-3. Use the script `lb_cmm/3_run_sieve_demo_16.cmm` (parallel trace) or `lb_cmm/3_run_sieve_demo_1lane.cmm` (serial trace) to debug and trace a simple sieve demo.
+3. Use the script `lb_cmm/10_run_sieve_demo_16.cmm` (parallel trace) or `lb_cmm/11_run_sieve_demo_1lane.cmm`/`lb_cmm/12_run_sieve_demo_2lane.cmm` (serial trace) to debug and trace a simple sieve demo.
 
 ## Generating the example bitstreams with Libero
 
@@ -102,11 +103,13 @@ These instructions were tested with Libero 2024.2, but should work with future r
 1. Open the project you wish to modify.
 2. Invoke Project→Execute Script…
 3. Select `axi_to_aurora.tcl` and click Run.
-4. Instantiate the `axi_to_aurora` HDL+ component in your design.
+4. Instantiate the `axi_to_aurora_1lane` or `axi_to_aurora_2lane` HDL+ component in your design.
 5. If not already in your design, Instantiate a Transceiver Interface (`PF_XCVR_ERM`) and supporting clocking infrastructure (Transmit PLL and Transceiver Reference clock).
    For the serial trace to work properly ensure to
     - set Transmit PLL into Integer Mode and
-    - set `PF_XCVR_ERM` to have 1 TX lane configured with 8b10b encoding and 32 bit TX PCS-Fabric Interface width.
+    - set `PF_XCVR_ERM` to have either
+       - 1 TX lane configured with 8b10b encoding and 32 bit TX PCS-Fabric Interface width or
+       - 2 TX lanes configured with 8b10b encoding and 16 bit TX PCS-Fabric Interface width.
 
    All other parameters (datarate, frequency, clock source) are highly specific to the used board, clocking sources, and the rest of the project.
    Refer to the videokit example project for details.

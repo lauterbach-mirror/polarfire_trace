@@ -1,6 +1,0 @@
-; takes ages, but luckily you only need to do this once...
-
-PRIVATE &ppd
-&ppd=OS.PresentPracticeDirectory()
-
-DO ~~~~/program.cmm "&ppd/bitstream_videokit_16.stp.gz"

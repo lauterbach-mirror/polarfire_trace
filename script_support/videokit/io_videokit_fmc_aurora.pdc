@@ -1,4 +1,0 @@
-set_io -port_name FMC_DP0_TXD_N -pin_name K33 -DIRECTION OUTPUT
-set_io -port_name FMC_DP0_TXD_P -pin_name K34 -DIRECTION OUTPUT
-set_io -port_name FMC_GBTCLK0_N -pin_name L28 -DIRECTION INPUT
-set_io -port_name FMC_GBTCLK0_P -pin_name L27 -DIRECTION INPUT
