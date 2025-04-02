@@ -45,6 +45,9 @@ begin
 		wState <= rState;
 
 		oReady <= not rState.valid(3);
+		oValid <= rState.valid(0);
+		oLast <= rState.last(0);
+		oData <= rState.data(0);
 
 		if rState.valid(0) = '1' and iReady = '0' then
 			oReady <= '0';
@@ -103,10 +106,6 @@ begin
 					-- data follows sync: sync will be the start of frame
 			end case;
 		end if;
-
-		oValid <= rState.valid(0);
-		oLast <= rState.last(0);
-		oData <= rState.data(0);
 	end process;
 
 	pSequential: process(iRst, iClk)
