@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-use work.sim_aurora_pkg;
+use work.sim_axi_to_x_pkg;
 
 entity sim_rcvr_align is
 	generic (
@@ -14,7 +14,7 @@ entity sim_rcvr_align is
 
 		iInValid:          in  std_logic;
 		iInK:              in  std_logic_vector(gLanes - 1 downto 0);
-		iInData:           in  sim_aurora_pkg.tData(gLanes - 1 downto 0);
+		iInData:           in  sim_axi_to_x_pkg.tData(gLanes - 1 downto 0);
 
 		oOutValid:         out std_logic;
 		oOutData:          out std_logic_vector(7 downto 0)
@@ -23,12 +23,12 @@ end entity;
 
 architecture behavioral of sim_rcvr_align is
 	signal wValid: std_logic;
-	signal wData:  sim_aurora_pkg.tData(2 * gLanes - 1 downto 0);
+	signal wData:  sim_axi_to_x_pkg.tData(2 * gLanes - 1 downto 0);
 	signal wK:     std_logic_vector(2 * gLanes - 1 downto 0);
 
 begin
 	pAlign: process(iRst, iClkLane)
-		variable vData: sim_aurora_pkg.tData(2 * gLanes - 1 downto 0);
+		variable vData: sim_axi_to_x_pkg.tData(2 * gLanes - 1 downto 0);
 		variable vK: std_logic_vector(2 * gLanes - 1 downto 0);
 		variable vPhase: integer;
 
@@ -69,7 +69,7 @@ begin
 	pOut: process(iRst, iClkByte)
 		variable vCnt: natural;
 		variable vValid: std_logic;
-		variable vData: sim_aurora_pkg.tData(2 * gLanes - 1 downto 0);
+		variable vData: sim_axi_to_x_pkg.tData(2 * gLanes - 1 downto 0);
 		variable vK: std_logic_vector(2 * gLanes - 1 downto 0);
 
 	begin

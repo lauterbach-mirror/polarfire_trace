@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-use work.sim_aurora_pkg;
+use work.sim_axi_to_x_pkg;
 
 entity sim_rcvr_deserialize is
 	generic (
@@ -14,7 +14,7 @@ entity sim_rcvr_deserialize is
 		iRxClk:            in  std_logic;
 
 		-- per-symbol data
-		iRxData:           in  sim_aurora_pkg.tData(gBytesPerLane - 1 downto 0);
+		iRxData:           in  sim_axi_to_x_pkg.tData(gBytesPerLane - 1 downto 0);
 		iRxK:              in  std_logic_vector(gBytesPerLane - 1 downto 0);
 		iRxCodeViolation:  in  std_logic_vector(gBytesPerLane - 1 downto 0);
 		iRxDisparityError: in  std_logic_vector(gBytesPerLane - 1 downto 0);
@@ -33,7 +33,7 @@ end entity;
 
 architecture behavioral of sim_rcvr_deserialize is
 	type tInput is record
-		data:            sim_aurora_pkg.tData(gBytesPerLane - 1 downto 0);
+		data:            sim_axi_to_x_pkg.tData(gBytesPerLane - 1 downto 0);
 		k:               std_logic_vector(gBytesPerLane - 1 downto 0);
 		code_violation:  std_logic_vector(gBytesPerLane - 1 downto 0);
 		disparity_error: std_logic_vector(gBytesPerLane - 1 downto 0);
@@ -86,7 +86,7 @@ begin
 	end process;
 
 	pOutput: process(iRst, iOutClk, wTgl)
-		variable vData:  sim_aurora_pkg.tData(4 * gBytesPerLane - 1 downto 0);
+		variable vData:  sim_axi_to_x_pkg.tData(4 * gBytesPerLane - 1 downto 0);
 		variable vK:     std_logic_vector(4 * gBytesPerLane - 1 downto 0);
 		variable vCnt:   natural := 0;
 		variable vValid: std_logic := '0';
