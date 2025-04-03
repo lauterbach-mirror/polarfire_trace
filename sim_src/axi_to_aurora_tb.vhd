@@ -264,5 +264,6 @@ begin
 		end loop;
 
 		wCheckDone <= '1';
+		wait;
 	end process;
 end architecture;

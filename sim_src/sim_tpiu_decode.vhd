@@ -79,6 +79,8 @@ begin
 			vTid := (others => '0');
 			vOutCnt := 0;
 			vOutPos := 0;
+			oOutValid <= '0';
+			oOutData  <= (others => '0');
 		elsif rising_edge(iClkByte) then
 			if iInValid = '1' then
 				if vCnt /= -1 then
