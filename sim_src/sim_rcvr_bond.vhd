@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-use work.sim_aurora_pkg;
+use work.sim_axi_to_x_pkg;
 
 entity sim_rcvr_bond is
 	generic (
@@ -13,18 +13,18 @@ entity sim_rcvr_bond is
 
 		iInValid:          in  std_logic_vector(gLanes - 1 downto 0);
 		iInK:              in  std_logic_vector(gLanes - 1 downto 0);
-		iInData:           in  sim_aurora_pkg.tData(gLanes - 1 downto 0);
+		iInData:           in  sim_axi_to_x_pkg.tData(gLanes - 1 downto 0);
 
 		oOutValid:         out std_logic;
 		oOutK:             out std_logic_vector(gLanes - 1 downto 0);
-		oOutData:          out sim_aurora_pkg.tData(gLanes - 1 downto 0)
+		oOutData:          out sim_axi_to_x_pkg.tData(gLanes - 1 downto 0)
 	);
 end entity;
 
 architecture behavioral of sim_rcvr_bond is
 begin
 	pBond: process(iRst, iClkLane)
-		function fFind(cData: in sim_aurora_pkg.tData; cK: std_logic_vector) return integer is
+		function fFind(cData: in sim_axi_to_x_pkg.tData; cK: std_logic_vector) return integer is
 			variable vPos: integer := -1;
 
 		begin
@@ -42,7 +42,7 @@ begin
 		constant cLength: natural := 8;
 
 		type tLane is record
-			data: sim_aurora_pkg.tData(cLength - 1 downto 0);
+			data: sim_axi_to_x_pkg.tData(cLength - 1 downto 0);
 			k:    std_logic_vector(cLength - 1 downto 0);
 			pos:  integer;
 			pos2: integer;

@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-use work.sim_aurora_pkg;
+use work.sim_axi_to_x_pkg;
 
 entity sim_aurora_rx is
 	generic (
@@ -33,15 +33,15 @@ entity sim_aurora_rx is
 end entity;
 
 architecture behavioral of sim_aurora_rx is
-	signal wRxData:     sim_aurora_pkg.tData(gLanes * gBytesPerLane - 1 downto 0);
+	signal wRxData:     sim_axi_to_x_pkg.tData(gLanes * gBytesPerLane - 1 downto 0);
 
 	signal wDesValid:   std_logic_vector(gLanes - 1 downto 0);
 	signal wDesK:       std_logic_vector(gLanes - 1 downto 0);
-	signal wDesData:    sim_aurora_pkg.tData(gLanes - 1 downto 0);
+	signal wDesData:    sim_axi_to_x_pkg.tData(gLanes - 1 downto 0);
 
 	signal wBondValid:  std_logic;
 	signal wBondK:      std_logic_vector(gLanes - 1 downto 0);
-	signal wBondData:   sim_aurora_pkg.tData(gLanes - 1 downto 0);
+	signal wBondData:   sim_axi_to_x_pkg.tData(gLanes - 1 downto 0);
 
 	signal wAlignValid: std_logic;
 	signal wAlignData:  std_logic_vector(7 downto 0);

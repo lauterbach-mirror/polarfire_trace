@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-use work.sim_aurora_pkg;
+use work.sim_axi_to_x_pkg;
 
 entity sim_tpiu_decode is
 	port (
@@ -19,9 +19,9 @@ end entity;
 architecture behavioral of sim_tpiu_decode is
 begin
 	pDecode: process(iRst, iClkByte)
-		variable vData: sim_aurora_pkg.tData(0 to 15);
+		variable vData: sim_axi_to_x_pkg.tData(0 to 15);
 		variable vTid: std_logic_vector(6 downto 0);
-		variable vOutData: sim_aurora_pkg.tData(0 to 14);
+		variable vOutData: sim_axi_to_x_pkg.tData(0 to 14);
 		variable vOutCnt: natural;
 		variable vOutPos: natural;
 		procedure fProcessFrame is
