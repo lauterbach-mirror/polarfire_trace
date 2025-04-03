@@ -83,9 +83,18 @@ begin
 			oOutData  <= (others => '0');
 		elsif rising_edge(iClkByte) then
 			if iInValid = '1' then
+				vSync := iInData & vSync(vSync'high downto 8);
+
 				if vCnt /= -1 then
 					vData(vCnt) := iInData;
 					vCnt := vCnt + 1;
+				end if;
+
+				if vSync = x"7FFFFFFF" then
+					assert vCnt = -1 or vCnt = 4 report "formatter sync error" severity failure;
+					vCnt := 0;
+				elsif vSync(31 downto 16) = x"7FFF" and vCnt > 0 and vCnt mod 2 = 0 then
+					vCnt := vCnt - 2;
 				end if;
 
 				if vCnt = 16 then
@@ -93,11 +102,6 @@ begin
 					vCnt := 0;
 				end if;
 
-				vSync := iInData & vSync(vSync'high downto 8);
-				if vSync = x"7FFFFFFF" then
-					assert vCnt = -1 or vCnt = 4 report "formatter sync error" severity failure;
-					vCnt := 0;
-				end if;
 			end if;
 
 			if vOutPos < vOutCnt then
