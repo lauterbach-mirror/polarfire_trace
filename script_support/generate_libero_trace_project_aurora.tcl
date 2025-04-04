@@ -65,6 +65,7 @@ exec $mss_config_loc -GENERATE -CONFIGURATION_FILE:$board_path/$mss_name.cfg -OU
 import_mss_component -file $project_dir/mss/$mss_name.cxz
 
 source axi_to_aurora.tcl
+source $src_path/add_simulation_files.tcl
 
 source $board_path/cr/0_create_components.tcl
 
@@ -73,6 +74,7 @@ source $src_path/aurora_ref.tcl
 source $src_path/aurora_pll.tcl
 source $src_path/aurora_xcvr_$variant.tcl
 source $src_path/trace_top_aurora.tcl
+source $src_path/trace_top_aurora_tb.tcl
 
 build_design_hierarchy
 set_root -module trace_top_aurora::work
