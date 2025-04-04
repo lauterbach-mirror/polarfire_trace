@@ -5,7 +5,7 @@ use work.sim_axi_to_x_pkg;
 
 entity sim_pti_rx is
 	generic (
-		gBytes:            positive
+		gBytes:            positive := 2
 	);
 	port (
 		iRst:              in  std_logic;
@@ -35,13 +35,11 @@ begin
 	pDeserialize: process(iRst, iTraceClk, iClkByte)
 		variable vData:  sim_axi_to_x_pkg.tData(4 * gBytes - 1 downto 0);
 		variable vCnt:   natural := 0;
-		variable vValid: std_logic := '0';
 
 	begin
 		if iRst = '1' then
 			vData  := (others => (others => 'U'));
 			vCnt   := 0;
-			vValid := '0';
 
 			wDesValid <= '0';
 			wDesData  <= (others => '0');
@@ -49,17 +47,19 @@ begin
 			if iTraceClk'event then
 				vData(vCnt + gBytes - 1 downto vCnt) := wTraceData;
 				vCnt := vCnt + gBytes;
-				if vCnt >= 2 * gBytes then
-					vValid := '1';
-				end if;
 			end if;
 
-			if rising_edge(iClkByte) and vValid = '1' then
-				wDesValid <= '1';
-				wDesData  <= vData(0);
-				vData(vData'high) := (others => 'U');
-				vData(vData'high - 1 downto 0) := vData(vData'high downto 1);
-				vCnt := vCnt - 1;
+			if rising_edge(iClkByte) then
+				if vCnt > 0 then
+					wDesValid <= '1';
+					wDesData  <= vData(0);
+					vData(vData'high) := (others => 'U');
+					vData(vData'high - 1 downto 0) := vData(vData'high downto 1);
+					vCnt := vCnt - 1;
+				else
+					wDesValid <= '0';
+					wDesData  <= (others => '0');
+				end if;
 			end if;
 		end if;
 	end process;

@@ -64,11 +64,13 @@ exec $mss_config_loc -GENERATE -CONFIGURATION_FILE:$board_path/$mss_name.cfg -OU
 import_mss_component -file $project_dir/mss/$mss_name.cxz
 
 source axi_to_pti.tcl
+source $src_path/add_simulation_files.tcl
 
 source $board_path/cr/0_create_components.tcl
 
 source $src_path/fic1ic.tcl
 source $src_path/trace_top.tcl
+source $src_path/trace_top_tb.tcl
 
 build_design_hierarchy
 set_root -module trace_top::work

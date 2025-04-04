@@ -5,8 +5,8 @@ use work.sim_axi_to_x_pkg;
 
 entity sim_aurora_rx is
 	generic (
-		gLanes:            positive;
-		gBytesPerLane:     positive
+		gLanes:            positive := 2;
+		gBytesPerLane:     positive := 2
 	);
 	port (
 		iRst:              in  std_logic;
