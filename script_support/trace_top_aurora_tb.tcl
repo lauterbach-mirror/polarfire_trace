@@ -132,3 +132,5 @@ sd_connect_pins -sd_name $sd_name -pin_names {"DQS_N" "trace_top_aurora_0:DQS_N"
 auto_promote_pad_pins -promote_all 1
 save_smartdesign -sd_name $sd_name
 generate_component -component_name $sd_name
+
+source $src_path/simulation_options.tcl

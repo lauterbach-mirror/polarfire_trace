@@ -11,6 +11,8 @@ import_files -library work -hdl_source sim_src/sim_pti_rx.vhd
 import_files -library work -hdl_source sim_src/sim_aurora_rx.vhd
 import_files -library work -hdl_source sim_src/sim_check_against_bfm.vhd
 import_files -simulation sim_src/${mss_name}_PFSOC_MSS_FIC1_user.bfm
+import_files -simulation sim_src/wave_trace_top_aurora_tb.do
+import_files -simulation sim_src/wave_trace_top_tb.do
 build_design_hierarchy
 
 create_hdl_core -file hdl/sim_pti_rx.vhd -module sim_pti_rx
