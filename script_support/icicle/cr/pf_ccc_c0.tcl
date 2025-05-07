@@ -77,8 +77,8 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL1_0_FABCLK_GATED_USED:false"  \
 "GL1_0_FABCLK_USED:true"  \
 "GL1_0_FREQ_SEL:false"  \
-"GL1_0_IS_USED:false"  \
-"GL1_0_OUT_FREQ:125"  \
+"GL1_0_IS_USED:true"  \
+"GL1_0_OUT_FREQ:175"  \
 "GL1_0_PHASE_INDEX:0"  \
 "GL1_0_PHASE_SEL:false"  \
 "GL1_0_PLL_PHASE:0"  \

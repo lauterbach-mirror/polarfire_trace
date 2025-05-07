@@ -2,7 +2,7 @@
 
 This repository contains resources to implement off-chip trace of the hard RISC-V cores of a PolarFire® SoC with Lauterbach tools.
 
-Trace can be exported using parallel trace (4, 8, 16 or 32 bit) 16-bit parallel with a PowerTrace 2/3 with an AutoFocus-II preprocessor.
+Trace can be exported using parallel trace (4, 8, or 16 data lines) with a PowerTrace 2/3 with an AutoFocus-II preprocessor.
 Alternatively, serial trace can be used with a PowerTrace Serial.
 Suggested serial configurations are one lane at 10 Gbit/s or two lanes at 5 GBit/s.
 Each configuration is as fast as a 16-bit parallel trace.
@@ -18,9 +18,9 @@ We support the following adaptions and evaluation boards:
 * PolarFire® SoC Video Kit via FMC connector using one of the following adapters:
 
   * Lauterbach [LA-2785](https://www.lauterbach.com/products/LA-2785);
-    This adapter allows up to 32-bit parallel trace or serial trace.
+    This adapter allows parallel trace or serial trace.
   * Xilinx/AMD [FMC XM105](https://www.xilinx.com/products/boards-and-kits/hw-fmc-xm105-g.html) card;
-    This adapter only allows 16-bit parallel trace.
+    This adapter only allows parallel trace.
 
   For 16-bit parallel trace, these adapters are pin compatible, so the same FPGA design can support both cards.
   For the converter's pin map, refer to `script_support/videokit/io_videokit_fmc.pdc` in this repository.
@@ -55,7 +55,7 @@ The scripts require exactly Libero 2024.2.
 1. Start Libero.
 2. Invoke Project→Execute Script…
 3. Select either `generate_icicle_project.tcl`, or `generate_videokit_project.tcl` or `generate_videokit_project_aurora.tcl`, depending on the desired evaluation board and trace type.
-   For parallel trace, you can specify the number of trace data bits `<n>` (4, 8, 16 or 32) as an argument.
+   For parallel trace, you can specify the number of trace data bits `<n>` (4, 8, 16) as an argument.
    The default is 16 bits.
    For serial trace, you can specify `1lane` or `2lane` as an argument to choose the desired setup.
    The default is `1lane`.

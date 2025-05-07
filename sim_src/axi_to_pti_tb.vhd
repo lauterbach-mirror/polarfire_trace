@@ -13,7 +13,8 @@ end entity;
 
 architecture behavioral of axi_to_pti_tb is
 	signal wRst:           std_logic := '1';
-	signal wClk:           std_logic := '1';
+	signal wClkAxi:        std_logic := '1';
+	signal wClkTrace:      std_logic := '1';
 	signal wMosi:          axi4_fic1_from_mss_pkg.tMOSI := axi4_fic1_from_mss_pkg.cMOSIRst;
 	signal wMiso:          axi4_fic1_from_mss_pkg.tMISO;
 	signal wTraceClk:      std_logic;
@@ -28,14 +29,16 @@ architecture behavioral of axi_to_pti_tb is
 	signal wDone:          std_logic := '0';
 
 begin
-	wClk <= wClk xnor wDone after 8 ns;
-	wClkByte <= wClkByte xnor wDone after 4 ns / gBytes;
+	wClkAxi   <= wClkAxi   xnor wDone after 8 ns;
+	wClkTrace <= wClkTrace xnor wDone after 4 ns;
+	wClkByte  <= wClkByte  xnor wDone after 2 ns / gBytes;
 
 	sUut: entity work.axi_to_pti_impl generic map (
 		gOutBits   => 8 * gBytes
 	) port map (
 		iRst       => wRst,
-		iClk       => wClk,
+		iClkAxi    => wClkAxi,
+		iClkTrace  => wClkTrace,
 
 		iMosi      => wMosi,
 		oMiso      => wMiso,
@@ -72,7 +75,7 @@ begin
 		wRst <= '0';
 		wait for 1 us;
 
-		sim_axi_to_x_pkg.fStimulateAxi(wClk, wMosi, wMiso, gSequenceLength);
+		sim_axi_to_x_pkg.fStimulateAxi(wClkAxi, wMosi, wMiso, gSequenceLength);
 
 		wait for 100 us;
 		assert wCheckDone = '1' report "missing data" severity failure;

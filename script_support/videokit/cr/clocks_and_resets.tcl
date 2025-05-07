@@ -12,6 +12,7 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {REF_CLK_PAD_N} -port_direc
 sd_create_scalar_port -sd_name ${sd_name} -port_name {REF_CLK_PAD_P} -port_direction {IN} -port_is_pad {1}
 
 sd_create_scalar_port -sd_name ${sd_name} -port_name {CLK_125MHz} -port_direction {OUT}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {CLK_TRACE} -port_direction {OUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {FABRIC_POR_N} -port_direction {OUT}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {RESETN_125MHz} -port_direction {OUT}
 
@@ -61,6 +62,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:A" "PF_CCC_C0_0:PLL_LOCK
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:B" "MSS_PLL_LOCKS" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:Y" "CORERESET_CLK_125MHz:PLL_LOCK" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CLK_125MHz" "CORERESET_CLK_125MHz:CLK" "PF_CCC_C0_0:OUT0_FABCLK_0" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CLK_TRACE" "PF_CCC_C0_0:OUT1_FABCLK_0" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_CLK_125MHz:EXT_RST_N" "EXT_RST_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_CLK_125MHz:FABRIC_RESET_N" "RESETN_125MHz" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_CLK_125MHz:FPGA_POR_N" "FABRIC_POR_N" "INIT_MONITOR_0:FABRIC_POR_N" }

@@ -9,7 +9,8 @@ entity axi_to_pti is
 	);
 	port (
 		iRstN:      in  std_logic;
-		iClk:       in  std_logic;
+		iClkAxi:    in  std_logic;
+		iClkTrace:  in  std_logic;
 
 		AWREADY:    out std_logic;
 		AWVALID:    in  std_logic;
@@ -60,7 +61,8 @@ begin
 		gOutBits        => gOutBits
 	) port map (
 		iRst            => wRst,
-		iClk            => iClk,
+		iClkAxi         => iClkAxi,
+		iClkTrace       => iClkTrace,
 
 		iMosi.aw.valid  => AWVALID,
 		iMosi.aw.id     => AWID,

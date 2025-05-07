@@ -4,7 +4,7 @@ if {[llength $argv] >= 1} {
 	set bits_used 16
 }
 
-set bits_phys           32
+set bits_phys           16
 
 set src_path            ./script_support
 set board_path          $src_path/videokit
