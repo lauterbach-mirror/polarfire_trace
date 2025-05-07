@@ -50,7 +50,7 @@ Instructions:
 ## Generating the example bitstreams with Libero
 
 The following instructions will generate a minimal FPGA project with just the MSS (microprocessor subsystem), trace and SDRAM connection.
-The scripts require exactly Libero 2023.2.
+The scripts require exactly Libero 2024.2.
 
 1. Start Libero.
 2. Invoke Project→Execute Script…
