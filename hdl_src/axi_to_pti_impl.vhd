@@ -10,7 +10,8 @@ entity axi_to_pti_impl is
 	);
 	port (
 		iRst:       in  std_logic;
-		iClk:       in  std_logic;
+		iClkAxi:    in  std_logic;
+		iClkTrace:  in  std_logic;
 
 		iMosi:      in  axi4_fic1_from_mss_pkg.tMOSI;
 		oMiso:      out axi4_fic1_from_mss_pkg.tMISO;
@@ -42,6 +43,9 @@ architecture behavioral of axi_to_pti_impl is
 	signal wPackedData:         std_logic_vector(63 downto 0);
 	signal wPackedReady:        std_logic;
 
+	signal wFastData:           std_logic_vector(63 downto 0);
+	signal wFastReady:          std_logic;
+
 	signal wReadData:           std_logic_vector(2 * gOutBits - 1 downto 0);
 
 begin
@@ -51,7 +55,7 @@ begin
 	-- that SMB writes data strictly in order.
 	sAxiToFifo: entity work.axi4_fic1_from_mss_to_stream port map (
 		iRst            => iRst,
-		iClk            => iClk,
+		iClk            => iClkAxi,
 
 		iMosi           => iMosi,
 		oMiso           => oMiso,
@@ -66,7 +70,7 @@ begin
 	-- Move non-64-bit beats to the least significant lanes.
 	sCompress: entity work.smb_compress port map (
 		iRst            => iRst,
-		iClk            => iClk,
+		iClk            => iClkAxi,
 
 		oInReady        => wAxiStreamReady,
 		iInValid        => wAxiStreamValid,
@@ -83,7 +87,7 @@ begin
 	-- Insert forced ID change and 32 0x00 Bytes before each aligned write.
 	sSync: entity work.smb_sync port map (
 		iRst            => iRst,
-		iClk            => iClk,
+		iClk            => iClkAxi,
 
 		oInReady        => wCompressedReady,
 		iInValidCnt     => wCompressedValidCnt,
@@ -111,7 +115,7 @@ begin
 		gSyncBits       => 8,
 		gFlushBits      => 8
 	) port map (
-		iClk            => iClk,
+		iClk            => iClkAxi,
 		iRst            => iRst,
 
 		iSyncInterval   => x"FF",
@@ -130,19 +134,35 @@ begin
 		iReady          => wPackedReady
 	);
 
-	-- If we want an async clock crossing, this would be the logical place to
-	-- insert it; Make sure the bandwidth on the write side is at least as high
-	-- as the bandwidth on the read side because there's no "valid" signal here.
+	-- Async clock crossing; we have to make sure that the bandwidth on the
+	-- write side is at least as high as on the read side because there's no
+	-- "valid" signal here.
+	sFifo: entity work.FifoDcReg generic map (
+		gBits           => 64,
+		gLdDepth        => 3
+	) port map (
+		iRst            => iRst,
+
+		iWrClk          => iClkAxi,
+		oReady          => wPackedReady,
+		iValid          => '1',
+		iData           => wPackedData,
+
+		iRdClk          => iClkTrace,
+		iReady          => wFastReady,
+		oValid          => open,
+		oData           => wFastData
+	);
 
 	sReader: entity work.tpiu_output_fifo_reader generic map (
 		gInBits         => 64,
 		gOutBits        => gOutBits * 2
 	) port map (
-		iClk            => iClk,
+		iClk            => iClkTrace,
 		iRst            => iRst,
 
-		iData           => wPackedData,
-		oReady          => wPackedReady,
+		iData           => wFastData,
+		oReady          => wFastReady,
 
 		oData           => wReadData
 	);
@@ -150,7 +170,7 @@ begin
 	sDdr: entity work.tpiu_ddr_pfio generic map (
 		gOutBits        => gOutBits
 	) port map (
-		iClk            => iClk,
+		iClk            => iClkTrace,
 		iRst            => iRst,
 
 		iData           => wReadData,

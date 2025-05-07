@@ -1,38 +1,38 @@
 ######### SoC Video kit FMC connector ###########
 
-set_io -port_name oTraceClk        -pin_name A30 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[0\]  -pin_name B24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[1\]  -pin_name F25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[2\]  -pin_name A28 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[3\]  -pin_name B28 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[4\]  -pin_name A25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[5\]  -pin_name B25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[6\]  -pin_name A29 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[7\]  -pin_name B29 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[8\]  -pin_name D26 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[9\]  -pin_name C27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[10\] -pin_name A27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[11\] -pin_name B27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[12\] -pin_name F24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[13\] -pin_name G24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[14\] -pin_name E23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[15\] -pin_name D23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[16\] -pin_name E21 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[17\] -pin_name F23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[18\] -pin_name A22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[19\] -pin_name A23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[20\] -pin_name H18 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[21\] -pin_name J18 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[22\] -pin_name D24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[23\] -pin_name D25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[24\] -pin_name C22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[25\] -pin_name B22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[26\] -pin_name G25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[27\] -pin_name G26 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[28\] -pin_name J27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[29\] -pin_name H27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[30\] -pin_name F22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
-set_io -port_name oTraceData\[31\] -pin_name E22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+set_io -port_name oTraceClk        -pin_name A30 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[0\]  -pin_name B24 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[1\]  -pin_name F25 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[2\]  -pin_name A28 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[3\]  -pin_name B28 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[4\]  -pin_name A25 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[5\]  -pin_name B25 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[6\]  -pin_name A29 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[7\]  -pin_name B29 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[8\]  -pin_name D26 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[9\]  -pin_name C27 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[10\] -pin_name A27 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[11\] -pin_name B27 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[12\] -pin_name F24 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[13\] -pin_name G24 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[14\] -pin_name E23 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+set_io -port_name oTraceData\[15\] -pin_name D23 -fixed true -io_std LVCMOS33 -OUT_DRIVE 20 -DIRECTION OUT
+#set_io -port_name oTraceData\[16\] -pin_name E21 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[17\] -pin_name F23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[18\] -pin_name A22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[19\] -pin_name A23 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[20\] -pin_name H18 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[21\] -pin_name J18 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[22\] -pin_name D24 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[23\] -pin_name D25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[24\] -pin_name C22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[25\] -pin_name B22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[26\] -pin_name G25 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[27\] -pin_name G26 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[28\] -pin_name J27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[29\] -pin_name H27 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[30\] -pin_name F22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
+#set_io -port_name oTraceData\[31\] -pin_name E22 -fixed true -io_std LVCMOS33 -DIRECTION OUT
 
 # Sig Mictor FMCP  FMCN           Ball
 # CLK  6     G6    HPC_LA00_CC_P  A30

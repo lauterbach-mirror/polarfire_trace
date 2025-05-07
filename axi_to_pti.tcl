@@ -3,7 +3,9 @@
 # SmartDesign.
 
 import_files -library work -hdl_source hdl_src/util_pkg.vhd
+import_files -library work -hdl_source hdl_src/graycnt_pkg.vhd
 import_files -library work -hdl_source hdl_src/FifoScReg.vhd
+import_files -library work -hdl_source hdl_src/FifoDcReg.vhd
 import_files -library work -hdl_source hdl_src/axi4_fic1_from_mss_pkg.vhd
 import_files -library work -hdl_source hdl_src/axi4_fic1_from_mss_to_stream.vhd
 import_files -library work -hdl_source hdl_src/tpiu_packer_pkg.vhd

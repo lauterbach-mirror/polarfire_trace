@@ -51,6 +51,7 @@ sd_connect_pins -sd_name $sd_name -pin_names [list "mss_0:REFCLK" "REFCLK"]
 sd_connect_pins -sd_name $sd_name -pin_names [list "mss_0:REFCLK_N" "REFCLK_N"]
 sd_mark_pins_unused -sd_name $sd_name -pin_names "mss_0:PLL_CPU_LOCK_M2F"
 sd_mark_pins_unused -sd_name $sd_name -pin_names "mss_0:PLL_DDR_LOCK_M2F"
+sd_mark_pins_unused -sd_name $sd_name -pin_names "clocks_and_resets_0:CLK_TRACE"
 
 # mss_0 DDR connections
 sd_connect_pins -sd_name $sd_name -pin_names [list "DM" "mss_0:DM"]

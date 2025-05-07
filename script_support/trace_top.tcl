@@ -54,11 +54,12 @@ sd_connect_pins -sd_name $sd_name -pin_names {"mss_0:ODT" "ODT" }
 sd_connect_pins -sd_name $sd_name -pin_names {"mss_0:RESET_N" "RESET_N" }
 
 # clocks_and_resets_0 connections
-sd_connect_pins -sd_name $sd_name -pin_names {"clocks_and_resets_0:CLK_125MHz" "mss_0:FIC_1_ACLK" "fic1ic_0:ACLK" "axi_to_pti_0:iClk" }
+sd_connect_pins -sd_name $sd_name -pin_names {"clocks_and_resets_0:CLK_125MHz" "mss_0:FIC_1_ACLK" "fic1ic_0:ACLK" "axi_to_pti_0:iClkAxi" }
 sd_connect_pins -sd_name $sd_name -pin_names {"clocks_and_resets_0:EXT_RST_N" "mss_0:MSS_RESET_N_M2F" }
 sd_connect_pins -sd_name $sd_name -pin_names {"clocks_and_resets_0:FABRIC_POR_N" "mss_0:MSS_RESET_N_F2M" }
 sd_connect_pins -sd_name $sd_name -pin_names {"clocks_and_resets_0:MSS_PLL_LOCKS" "mss_0:FIC_1_DLL_LOCK_M2F" }
 sd_connect_pins -sd_name $sd_name -pin_names {"clocks_and_resets_0:RESETN_125MHz" "fic1ic_0:ARESETN" "axi_to_pti_0:iRstN" }
+sd_connect_pins -sd_name $sd_name -pin_names {"clocks_and_resets_0:CLK_TRACE" "axi_to_pti_0:iClkTrace" }
 
 # AXI bus connections
 sd_connect_pins -sd_name $sd_name -pin_names {"mss_0:FIC_1_AXI4_INITIATOR" "fic1ic_0:AXI4mmaster0" }
