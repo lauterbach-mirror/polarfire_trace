@@ -71,6 +71,18 @@ The scripts require exactly Libero 2024.2.
    Click OK.
    This generates a bitstream (.stp file) suitable for programming with TRACE32.
 
+## Simulating the example projects
+
+The example projects include a testbench that can be used to do a pre-synthesis integration test of the complete trace path.
+To run the testbench:
+
+1. Open one of the example projects with Libero.
+2. In the “Design Flow” tab, double-click on “Create Design→Verify Pre-Synthesized Design→Simulate”.
+
+QuestaSim or Modelsim should open and automatically compile and simulate the project.
+The signal `oDone` should switch to `'1'` near the end of the simulation run.
+This indicates that all pseudo-random data that was written by the simulated MSS component passed through the `axi_to_pti` or `axi_to_aurora` component and was decoded and verified successfully by the testbench.
+
 ## Integrating the `axi_to_pti` IP into an existing FPGA design
 
 The following instructions describe how to add off-chip trace to an existing design.

@@ -98,4 +98,6 @@ organize_tool_files -tool PLACEROUTE \
 	-input_type {constraint}
 set_as_target -type io_pdc -file $constr_trace
 
+source $src_path/simulation_options.tcl
+
 save_project

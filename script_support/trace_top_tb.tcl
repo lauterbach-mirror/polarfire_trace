@@ -88,4 +88,4 @@ auto_promote_pad_pins -promote_all 1
 save_smartdesign -sd_name $sd_name
 generate_component -component_name $sd_name
 
-source $src_path/simulation_options.tcl
+set tb_sd_name $sd_name
