@@ -98,6 +98,12 @@ organize_tool_files -tool PLACEROUTE \
 	-input_type {constraint}
 set_as_target -type io_pdc -file $constr_trace
 
+organize_tool_files -tool {VERIFYTIMING} \
+	-file "$project_dir/constraint/trace_top_derived_constraints.sdc" \
+	-file "$project_dir/constraint/timing.sdc" \
+	-module {trace_top::work} \
+	-input_type {constraint}
+
 source $src_path/simulation_options.tcl
 
 save_project

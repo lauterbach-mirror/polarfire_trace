@@ -85,7 +85,7 @@ import_files \
 	-io_pdc $board_path/$constr_trace \
 	-io_pdc $board_path/pins.pdc \
 	-fp_pdc $board_path/floorplan.pdc \
-	-sdc "$src_path/timing.sdc"
+	-sdc "$src_path/timing_aurora_$variant.sdc"
 
 organize_tool_files -tool SYNTHESIZE \
 	-file "$project_dir/constraint/trace_top_aurora_derived_constraints.sdc" \
@@ -97,10 +97,16 @@ organize_tool_files -tool PLACEROUTE \
 	-file "$project_dir/constraint/fp/floorplan.pdc" \
 	-file "$project_dir/constraint/io/pins.pdc" \
 	-file "$project_dir/constraint/io/$constr_trace" \
-	-file "$project_dir/constraint/timing.sdc" \
+	-file "$project_dir/constraint/timing_aurora_$variant.sdc" \
 	-module {trace_top_aurora::work} \
 	-input_type {constraint}
 set_as_target -type io_pdc -file $constr_trace
+
+organize_tool_files -tool {VERIFYTIMING} \
+	-file "$project_dir/constraint/trace_top_aurora_derived_constraints.sdc" \
+	-file "$project_dir/constraint/timing_aurora_$variant.sdc" \
+	-module {trace_top_aurora::work} \
+	-input_type {constraint}
 
 source $src_path/simulation_options.tcl
 
