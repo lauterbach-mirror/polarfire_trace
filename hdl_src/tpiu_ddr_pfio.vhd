@@ -22,6 +22,7 @@ end entity;
 architecture behavioral of tpiu_ddr_pfio is
 	-- register stage intended to be placed close to the I/O blocks
 	signal rData:       std_logic_vector(gOutBits * 2 - 1 downto 0) := (others => '1');
+	signal rClk:        std_logic_vector(1 downto 0) := (others => '1');
 
 	-- "IP" component generated to get one single DDR output register in an I/O
 	-- block
@@ -39,15 +40,17 @@ begin
 	begin
 		if iRst = '1' then
 			rData         <= (others => '1');
+			rClk          <= (others => '1');
 		elsif rising_edge(iClk) then
 			rData         <= iData;
+			rClk          <= "10";
 		end if;
 	end process;
 
 	sClkDdr: component PF_IO_DDR_OUT port map (
 		TX_CLK => iClk,
-		DR     => '0',
-		DF     => '1',
+		DR     => rClk(0),
+		DF     => rClk(1),
 		PADO   => oClk
 	);
 
