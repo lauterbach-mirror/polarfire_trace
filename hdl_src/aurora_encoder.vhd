@@ -105,7 +105,7 @@ begin
 		wIdleData(i)        <= wIdleDataRaw((i + 1) * 16 - 1 downto i * 16);
 	end generate;
 
-	pCombinatorial: process(rState, wInData, wIdleData, iData, iValid, iLast, iEmpty)
+	pCombinatorial: process(rState, wInData, wIdleData, iValid, iLast, iEmpty)
 		variable vIndexA:   natural;
 		variable vIndexB:   natural;
 
