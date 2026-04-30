@@ -132,3 +132,14 @@ These instructions were tested with Libero 2024.2, but should work with future r
    The converter IP only needs a 4-KiB address range and only needs write access.
    Check the example designs for more details.
 7. The base address where the MSS can write to the converter IP needs to be configured in TRACE32 using the `SYStem.CONFIG USOCSMB.BufferBase` command.
+
+## Disabling the IP for production use
+
+When one of the trace IP blocks is included in a design for verification and must remain in the final design, the output can be disabled by keeping the `iRstN` input signal of the IP block asserted.
+The system integrator can use a memory-mapped GPIO or similar to generate this signal, making sure that the IP cannot be enabled accidentally.
+
+While in reset, the parallel trace pins are kept at a constant level to minimize EMI and power consumption.
+Likewise, for the aurora IP, the serial transceivers are kept in reset and will not output any data.
+
+Being in reset also means that the IP does not answer to any AXI transactions, which will cause issues if any such transaction occurs.
+Therefore, it is recommended to set up the PMP (Physical Memory Protection) units of the cores to prevent access to the trace IP.
