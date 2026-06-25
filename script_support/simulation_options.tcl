@@ -1,6 +1,6 @@
 set_modelsim_options \
 	-use_automatic_do_file TRUE \
-	-sim_runtime 35000ns \
+	-sim_runtime 55000ns \
 	-tb_module_name $tb_sd_name \
 	-include_do_file TRUE \
 	-included_do_file $project_dir/simulation/wave_$tb_sd_name.do

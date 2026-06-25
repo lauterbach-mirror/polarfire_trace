@@ -1,7 +1,5 @@
-set gBytes [expr $bits_used / 8]
-
-# nominally 2000 / $gBytes, but make it slightly faster due to rounding errors in the clk_gen_ref_clk_pad specifications and/or the PLL
-set period_byte [expr 1900 / $gBytes]
+# nominally 2000 * 8 / $bits_used, but make it slightly faster due to rounding errors in the clk_gen_ref_clk_pad specifications and/or the PLL
+set period_byte [expr 1900 * 8 / $bits_used]
 
 source $board_path/cr/3_create_sim_cores.tcl
 create_and_configure_core -core_vlnv {Actel:Simulation:CLK_GEN:1.0.1} -component_name {clk_gen_byte} -params  "\"CLK_PERIOD:$period_byte\"  \"DUTY_CYCLE:50\""
@@ -36,7 +34,7 @@ sd_instantiate_component -sd_name $sd_name -component_name {reset_gen_c0} -insta
 
 # Add verification instances
 sd_instantiate_hdl_core -sd_name $sd_name -hdl_core_name {sim_pti_rx} -instance_name {sim_pti_rx_0}
-sd_configure_core_instance -sd_name $sd_name -instance_name {sim_pti_rx_0} -params "\"gBytes:$gBytes\"" -validate_rules 0
+sd_configure_core_instance -sd_name $sd_name -instance_name {sim_pti_rx_0} -params "\"gBits:$bits_used\"" -validate_rules 0
 sd_save_core_instance_config -sd_name $sd_name -instance_name {sim_pti_rx_0}
 sd_update_instance -sd_name $sd_name -instance_name {sim_pti_rx_0}
 sd_instantiate_hdl_core -sd_name $sd_name -hdl_core_name {sim_check_against_bfm} -instance_name {sim_check_against_bfm_0}

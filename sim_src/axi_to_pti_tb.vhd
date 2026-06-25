@@ -6,7 +6,7 @@ use work.sim_axi_to_x_pkg;
 
 entity axi_to_pti_tb is
 	generic (
-		gBytes:          positive := 2;
+		gBits:           positive := 4;
 		gSequenceLength: positive := 65536
 	);
 end entity;
@@ -18,7 +18,7 @@ architecture behavioral of axi_to_pti_tb is
 	signal wMosi:          axi4_fic1_from_mss_pkg.tMOSI := axi4_fic1_from_mss_pkg.cMOSIRst;
 	signal wMiso:          axi4_fic1_from_mss_pkg.tMISO;
 	signal wTraceClk:      std_logic;
-	signal wTraceData:     std_logic_vector(8 * gBytes - 1 downto 0);
+	signal wTraceData:     std_logic_vector(gBits - 1 downto 0);
 
 	signal wReceivedValid: std_logic;
 	signal wReceivedData:  std_logic_vector(7 downto 0);
@@ -31,10 +31,10 @@ architecture behavioral of axi_to_pti_tb is
 begin
 	wClkAxi   <= wClkAxi   xnor wDone after 8 ns;
 	wClkTrace <= wClkTrace xnor wDone after 4 ns;
-	wClkByte  <= wClkByte  xnor wDone after 2 ns / gBytes;
+	wClkByte  <= wClkByte  xnor wDone after 16 ns / gBits;
 
 	sUut: entity work.axi_to_pti_impl generic map (
-		gOutBits   => 8 * gBytes
+		gOutBits   => gBits
 	) port map (
 		iRst       => wRst,
 		iClkAxi    => wClkAxi,
@@ -48,7 +48,7 @@ begin
 	);
 
 	sPtiRx: entity work.sim_pti_rx generic map (
-		gBytes            => gBytes
+		gBits             => gBits
 	) port map (
 		iRst              => wRst,
 
