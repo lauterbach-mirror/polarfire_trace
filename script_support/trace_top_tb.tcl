@@ -1,5 +1,5 @@
 # nominally 2000 * 8 / $bits_used, but make it slightly faster due to rounding errors in the clk_gen_ref_clk_pad specifications and/or the PLL
-set period_byte [expr 1900 * 8 / $bits_used]
+set period_byte [expr (1900 * 8) / $bits_used]
 
 source $board_path/cr/3_create_sim_cores.tcl
 create_and_configure_core -core_vlnv {Actel:Simulation:CLK_GEN:1.0.1} -component_name {clk_gen_byte} -params  "\"CLK_PERIOD:$period_byte\"  \"DUTY_CYCLE:50\""
