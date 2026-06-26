@@ -24,7 +24,7 @@ We support the following adaptions and evaluation boards:
 
   For 16-bit parallel trace, these adapters are pin compatible, so the same FPGA design can support both cards.
   For the converter's pin map, refer to `script_support/videokit/io_videokit_fmc.pdc` in this repository.
-* PolarFire® SoC FPGA Icicle Kit via RPi connector using Lauterbach [LA-3884](https://www.lauterbach.com/products/LA-3884);
+* PolarFire® SoC FPGA Icicle Kit (Rev 1.0) via RPi connector using Lauterbach [LA-3884](https://www.lauterbach.com/products/LA-3884);
   For the converter's pin map, refer to `script_support/icicle/io_icicle_rpi.pdc` in this repository.
 
 Of course, trace is also possible with other boards, but for these, the user will need to create their own FPGA design.

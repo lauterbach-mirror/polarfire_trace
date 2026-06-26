@@ -56,6 +56,8 @@ ELSE IF CPU()=="MPFS250T-U54"
 	Register.Set PC background /CORE 3
 )
 
+USOC.RTE.ON
+
 Analyzer.state
 
 ENDDO

@@ -26,6 +26,8 @@ SYStem.Mode Up
 GOSUB configure_target_registers
 Data.LOAD.Elf ~~~~/sieve_ram_e51.elf /Quad /PlusVM /RelPATH
 
+USOC.RTE.ON
+
 Trace.METHOD Analyzer
 Analyzer.Init
 Analyzer.state
